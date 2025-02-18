@@ -1,0 +1,40 @@
+@baseUrl = http://localhost:8000
+@authToken = 
+
+### Get all users
+GET {{baseUrl}}/users
+Authorization: Bearer {{authToken}}
+
+### Get single user
+GET {{baseUrl}}/users/1
+Authorization: Bearer {{authToken}}
+
+### Create user
+POST {{baseUrl}}/users
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "password123",
+    "role": "user",
+    "status": "active"
+}
+
+### Update user
+PUT {{baseUrl}}/users/1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "John Doe Updated",
+    "email": "john.updated@example.com",
+    "password": "newpassword123",
+    "role": "user",
+    "status": "active"
+}
+
+### Delete user
+DELETE {{baseUrl}}/users/1
+Authorization: Bearer {{authToken}}

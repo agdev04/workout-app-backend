@@ -1,0 +1,35 @@
+@baseUrl = http://localhost:8000
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3Mzk4MDc1OTJ9.L3HxARqz6z0gVNHHsSOQ5vlVFLp04jW5o0EFHZagGwM
+
+
+### Get all body parts
+GET {{baseUrl}}/body-parts
+Authorization: Bearer {{authToken}}
+
+### Get single body part
+GET {{baseUrl}}/body-parts/1
+Authorization: Bearer {{authToken}}
+
+### Create body part
+POST {{baseUrl}}/body-parts
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "Chest",
+    "description": "Chest muscles including pectoralis major and minor"
+}
+
+### Update body part
+PATCH {{baseUrl}}/body-parts/1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "Updated Chest",
+    "description": "Updated description for chest muscles"
+}
+
+### Delete body part
+DELETE {{baseUrl}}/body-parts/1
+Authorization: Bearer {{authToken}}

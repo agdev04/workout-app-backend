@@ -1,0 +1,76 @@
+@baseUrl = http://localhost:8000
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3Mzk4MTE2ODV9.ALzVc3_rmV5nV-N2QnZjgCftoynVN5YPqJPGGwCaNAY
+### Get all exercises
+GET {{baseUrl}}/exercises
+Authorization: Bearer {{authToken}}
+
+### Get single exercise
+GET {{baseUrl}}/exercises/1
+Authorization: Bearer {{authToken}}
+
+### Create exercise
+POST {{baseUrl}}/exercises
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "Bench Press",
+    "description": "A compound exercise that targets the chest muscles",
+    "instructions": "1. Lie on a flat bench\n2. Grip the barbell with hands slightly wider than shoulder-width\n3. Lower the bar to your chest\n4. Push the bar back up to starting position",
+    "is_active": true
+}
+
+### Update exercise
+PATCH {{baseUrl}}/exercises/1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "Barbell Bench Press",
+    "description": "Updated description for bench press exercise",
+    "instructions": "Updated instructions for performing bench press"
+}
+
+### Delete exercise
+DELETE {{baseUrl}}/exercises/1
+Authorization: Bearer {{authToken}}
+
+### Add body part to exercise
+POST {{baseUrl}}/exercises/body-parts
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "exercise_id": 1,
+    "body_part_id": 2
+}
+
+### Remove body part from exercise
+DELETE {{baseUrl}}/exercises/1/body-parts/1
+Authorization: Bearer {{authToken}}
+
+### Add category to exercise
+POST {{baseUrl}}/exercises/1/categories
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "category_id": 1
+}
+
+### Remove category from exercise
+DELETE {{baseUrl}}/exercises/1/categories/1
+Authorization: Bearer {{authToken}}
+
+### Add equipment to exercise
+POST {{baseUrl}}/exercises/1/equipment
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "equipment_id": 1
+}
+
+### Remove equipment from exercise
+DELETE {{baseUrl}}/exercises/1/equipment/1
+Authorization: Bearer {{authToken}}

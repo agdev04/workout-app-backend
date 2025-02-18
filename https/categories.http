@@ -1,0 +1,34 @@
+@baseUrl = http://localhost:8000
+@authToken = 
+
+### Get all categories
+GET {{baseUrl}}/categories
+Authorization: Bearer {{authToken}}
+
+### Get single category
+GET {{baseUrl}}/categories/1
+Authorization: Bearer {{authToken}}
+
+### Create category
+POST {{baseUrl}}/categories
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "Strength Training",
+    "description": "Exercises focused on building muscle strength"
+}
+
+### Update category
+PATCH {{baseUrl}}/categories/1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "Updated Strength Training",
+    "description": "Updated description for strength training exercises"
+}
+
+### Delete category
+DELETE {{baseUrl}}/categories/1
+Authorization: Bearer {{authToken}}

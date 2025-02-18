@@ -1,0 +1,79 @@
+@baseUrl = http://localhost:8080/api
+@authToken = {{login.response.body.$.data.token}}
+
+### Login to get auth token
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@admin.com",
+    "password": "password123"
+}
+
+### Create a new meal
+# @name createMeal
+POST {{baseUrl}}/meals
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "Chicken Stir Fry",
+    "category": "Main Course",
+    "description": "A healthy and quick stir fry dish",
+    "image_url": "https://example.com/images/chicken-stir-fry.jpg"
+}
+
+### Get all meals with their ingredients and instructions
+GET {{baseUrl}}/meals
+Authorization: Bearer {{authToken}}
+
+### Get a specific meal by ID
+GET {{baseUrl}}/meals/1
+Authorization: Bearer {{authToken}}
+
+### Update a meal
+PUT {{baseUrl}}/meals/1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "Updated Chicken Stir Fry",
+    "category": "Main Course",
+    "description": "An updated healthy and quick stir fry dish",
+    "image_url": "https://example.com/images/updated-chicken-stir-fry.jpg"
+}
+
+### Add ingredient to a meal
+POST {{baseUrl}}/meals/1/ingredients
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "meal_id": 1,
+    "name": "Chicken breast",
+    "amount": "200g"
+}
+
+### Delete ingredient from a meal
+DELETE {{baseUrl}}/meals/1/ingredients/1
+Authorization: Bearer {{authToken}}
+
+### Add instruction to a meal
+POST {{baseUrl}}/meals/1/instructions
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "meal_id": 1,
+    "step_number": 1,
+    "instruction": "Cut chicken into bite-sized pieces"
+}
+
+### Delete instruction from a meal
+DELETE {{baseUrl}}/meals/1/instructions/1
+Authorization: Bearer {{authToken}}
+
+### Delete a meal
+DELETE {{baseUrl}}/meals/1
+Authorization: Bearer {{authToken}}

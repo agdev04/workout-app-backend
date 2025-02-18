@@ -1,0 +1,34 @@
+@baseUrl = http://localhost:8000
+@authToken = 
+
+### Get all equipment
+GET {{baseUrl}}/equipment
+Authorization: Bearer {{authToken}}
+
+### Get single equipment
+GET {{baseUrl}}/equipment/1
+Authorization: Bearer {{authToken}}
+
+### Create equipment
+POST {{baseUrl}}/equipment
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "Dumbbell",
+    "description": "Free weights for strength training"
+}
+
+### Update equipment
+PATCH {{baseUrl}}/equipment/1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "Heavy Dumbbell",
+    "description": "Updated description for dumbbell equipment"
+}
+
+### Delete equipment
+DELETE {{baseUrl}}/equipment/1
+Authorization: Bearer {{authToken}}

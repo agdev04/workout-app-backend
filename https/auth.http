@@ -1,0 +1,37 @@
+@baseUrl = http://localhost:8000
+@email = dev@agnieve.com
+@password = pass123
+@authToken = {{login.response.body.token}}
+
+### Register a new user
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+    "name": "AG Nieve",
+    "email": "{{email}}",
+    "password": "{{password}}",
+    "role" : "admin",
+    "status" : "active"
+}
+
+### Login (Default Auth)
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "{{email}}",
+    "password": "{{password}}"
+}
+
+### Logout (HTTP-Only Auth)
+POST {{baseUrl}}/auth/logout
+Content-Type: application/json
+
+### Protected Route Example (with Bearer Token - for Default Auth)
+GET {{baseUrl}}/protected-route
+Authorization: Bearer {{authToken}}
+
+### Protected Route Example (with HTTP-Only Cookie - for HTTP-Only Auth)
+GET {{baseUrl}}/protected-route
