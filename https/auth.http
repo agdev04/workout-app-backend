@@ -8,10 +8,10 @@ POST {{baseUrl}}/register
 Content-Type: application/json
 
 {
-    "name": "AG Nieve",
+    "name": "Test User",
     "email": "{{email}}",
     "password": "{{password}}",
-    "role" : "admin",
+    "role" : "staff",
     "status" : "active"
 }
 

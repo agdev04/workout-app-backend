@@ -1,5 +1,5 @@
-@baseUrl = http://localhost:8080/api
-@authToken = {{login.response.body.$.data.token}}
+@baseUrl = http://localhost:8000
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3Mzk4NTQzNzF9.RYqCyfKFeQLkIomb7XH40Pz9YlVta4nhqNzKdxAFCN0
 
 ### Login to get auth token
 # @name login
@@ -45,7 +45,7 @@ Authorization: Bearer {{authToken}}
 }
 
 ### Add ingredient to a meal
-POST {{baseUrl}}/meals/1/ingredients
+POST {{baseUrl}}/meals/ingredients
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
@@ -60,7 +60,7 @@ DELETE {{baseUrl}}/meals/1/ingredients/1
 Authorization: Bearer {{authToken}}
 
 ### Add instruction to a meal
-POST {{baseUrl}}/meals/1/instructions
+POST {{baseUrl}}/meals/instructions
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 

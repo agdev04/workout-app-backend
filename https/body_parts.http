@@ -1,6 +1,5 @@
 @baseUrl = http://localhost:8000
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3Mzk4MDc1OTJ9.L3HxARqz6z0gVNHHsSOQ5vlVFLp04jW5o0EFHZagGwM
-
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjIiLCJleHAiOjE3Mzk4NjQ1NjJ9.TfTi8thiz_z0Wst4KsnicSuBvG7PT-br-9GQeoaLrTI
 
 ### Get all body parts
 GET {{baseUrl}}/body-parts

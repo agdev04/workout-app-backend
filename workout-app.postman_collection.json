@@ -1,0 +1,323 @@
+{
+  "info": {
+    "name": "Workout App API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "authToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["register"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"AG Nieve\",\n    \"email\": \"dev@agnieve.com\",\n    \"password\": \"pass123\",\n    \"role\": \"admin\",\n    \"status\": \"active\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": ["pm.environment.set(\"authToken\", pm.response.json().token);"]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"dev@agnieve.com\",\n    \"password\": \"pass123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "logout"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Workouts",
+      "item": [
+        {
+          "name": "Create Workout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workouts",
+              "host": ["{{baseUrl}}"],
+              "path": ["workouts"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Full Body Workout\",\n    \"description\": \"A comprehensive full body workout routine\",\n    \"duration_minutes\": 60,\n    \"difficulty\": \"intermediate\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get All Workouts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workouts",
+              "host": ["{{baseUrl}}"],
+              "path": ["workouts"]
+            }
+          }
+        },
+        {
+          "name": "Get Workout by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workouts/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["workouts", "1"]
+            }
+          }
+        },
+        {
+          "name": "Update Workout",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/workouts/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["workouts", "1"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Updated Full Body Workout\",\n    \"description\": \"An updated comprehensive full body workout routine\",\n    \"duration_minutes\": 75,\n    \"difficulty_level\": \"advanced\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Exercises",
+      "item": [
+        {
+          "name": "Get All Exercises",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/exercises",
+              "host": ["{{baseUrl}}"],
+              "path": ["exercises"]
+            }
+          }
+        },
+        {
+          "name": "Get Exercise by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/exercises/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["exercises", "1"]
+            }
+          }
+        },
+        {
+          "name": "Create Exercise",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/exercises",
+              "host": ["{{baseUrl}}"],
+              "path": ["exercises"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Bench Press\",\n    \"description\": \"A compound exercise that targets the chest muscles\",\n    \"instructions\": \"1. Lie on a flat bench\\n2. Grip the barbell with hands slightly wider than shoulder-width\\n3. Lower the bar to your chest\\n4. Push the bar back up to starting position\",\n    \"is_active\": true\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Exercise",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/exercises/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["exercises", "1"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Barbell Bench Press\",\n    \"description\": \"Updated description for bench press exercise\",\n    \"instructions\": \"Updated instructions for performing bench press\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Delete Exercise",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/exercises/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["exercises", "1"]
+            }
+          }
+        },
+        {
+          "name": "Add Body Part to Exercise",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/exercises/body-parts",
+              "host": ["{{baseUrl}}"],
+              "path": ["exercises", "body-parts"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"exercise_id\": 1,\n    \"body_part_id\": 2\n}"
+            }
+          }
+        },
+        {
+          "name": "Remove Body Part from Exercise",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/exercises/1/body-parts/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["exercises", "1", "body-parts", "1"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

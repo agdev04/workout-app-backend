@@ -1,0 +1,83 @@
+@baseUrl = http://localhost:8000
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3Mzk4NjA0MDZ9.S7VEM8ftuMPjwiso3sTgwMJ-BECAUUq2xwK9zWKMZPo
+
+### Login to get auth token
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "dev@agnieve.com",
+    "password": "pass123"
+}
+
+### Create a new programme
+POST {{baseUrl}}/programmes
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "12-Week Strength Programme",
+    "description": "A comprehensive strength training programme",
+    "duration_weeks": 12,
+    "weeks" : 2
+}
+
+### Get all programmes
+GET {{baseUrl}}/programmes
+Authorization: Bearer {{authToken}}
+
+### Get a specific programme
+GET {{baseUrl}}/programmes/1
+Authorization: Bearer {{authToken}}
+
+### Update a programme
+PATCH {{baseUrl}}/programmes/1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "Updated Strength Programme",
+    "description": "Updated programme description",
+    "duration_weeks": 8
+}
+
+### Delete a programme
+DELETE {{baseUrl}}/programmes/1
+Authorization: Bearer {{authToken}}
+
+### Add a programme week
+POST {{baseUrl}}/programmes/weeks
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "programme_id": 1,
+    "week_number": 1,
+    "name": "Week 1 - Foundation",
+    "description": "Focus on basic compound movements"
+}
+
+### Delete a programme week
+DELETE {{baseUrl}}/programmes/1/weeks/1
+Authorization: Bearer {{authToken}}
+
+### Add a programme day with exercise
+POST {{baseUrl}}/programmes/days
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "programme_week_id": 1,
+    "day_number": 1,
+    "name": "Day 1 - Push",
+    "description": "Push day focusing on chest and shoulders",
+    "exercise_id": 1,
+    "sets": 3,
+    "reps": 12,
+    "rest_duration": 60
+}
+
+### Delete a programme day exercise
+DELETE {{baseUrl}}/programmes/1/days/1/exercises/1
+Authorization: Bearer {{authToken}}

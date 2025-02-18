@@ -16,6 +16,7 @@ CREATE TABLE workout_exercises (
     position INTEGER NOT NULL,
     reps INTEGER,
     duration_seconds INTEGER,
+    rest_seconds INTEGER,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CHECK (reps IS NOT NULL OR duration_seconds IS NOT NULL)

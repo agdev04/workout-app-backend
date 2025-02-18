@@ -130,7 +130,7 @@ pub async fn delete_meal(id: web::Path<i32>) -> Result<HttpResponse> {
 }
 
 // Meal Ingredients handlers
-pub async fn add_meal_ingredient(_meal_id: web::Path<i32>, new_ingredient: web::Json<NewMealIngredient>) -> Result<HttpResponse> {
+pub async fn add_meal_ingredient(new_ingredient: web::Json<NewMealIngredient>) -> Result<HttpResponse> {
     let mut connection = establish_connection();
 
     let result = diesel::insert_into(meal_ingredients::table)
@@ -163,7 +163,7 @@ pub async fn delete_meal_ingredient(params: web::Path<(i32, i32)>) -> Result<Htt
 }
 
 // Meal Instructions handlers
-pub async fn add_meal_instruction(_meal_id: web::Path<i32>, new_instruction: web::Json<NewMealInstruction>) -> Result<HttpResponse> {
+pub async fn add_meal_instruction(new_instruction: web::Json<NewMealInstruction>) -> Result<HttpResponse> {
     let mut connection = establish_connection();
 
     let result = diesel::insert_into(meal_instructions::table)

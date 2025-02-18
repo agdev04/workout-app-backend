@@ -1,0 +1,65 @@
+@baseUrl = http://localhost:8000
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3Mzk4NTkwNjh9.TxSKghRw9srg69NiXis7LTuaARMGjW4l_J18aDB9gTo
+### Login to get auth token
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "dev@agnieve.com",
+    "password": "pass123"
+}
+
+### Create a new workout
+# @name createWorkout
+POST {{baseUrl}}/workouts
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "Full Body Workout",
+    "description": "A comprehensive full body workout routine",
+    "duration_minutes": 60,
+    "difficulty": "intermediate"
+}
+
+### Get all workouts with their exercises
+GET {{baseUrl}}/workouts
+Authorization: Bearer {{authToken}}
+
+### Get a specific workout by ID
+GET {{baseUrl}}/workouts/1
+Authorization: Bearer {{authToken}}
+
+### Update a workout
+PATCH {{baseUrl}}/workouts/1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name": "Updated Full Body Workout",
+    "description": "An updated comprehensive full body workout routine",
+    "duration_minutes": 75,
+    "difficulty_level": "advanced"
+}
+
+### Add exercise to a workout
+POST {{baseUrl}}/workouts/exercises
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "workout_id": 1,
+    "exercise_id": 1,
+    "reps": 12,
+    "rest_seconds": 60,
+    "position" : 1
+}
+
+### Delete exercise from a workout
+DELETE {{baseUrl}}/workouts/1/exercises/1
+Authorization: Bearer {{authToken}}
+
+### Delete a workout
+DELETE {{baseUrl}}/workouts/1
+Authorization: Bearer {{authToken}}

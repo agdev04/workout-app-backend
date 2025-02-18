@@ -1,5 +1,6 @@
 @baseUrl = http://localhost:8000
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3Mzk4MTE2ODV9.ALzVc3_rmV5nV-N2QnZjgCftoynVN5YPqJPGGwCaNAY
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3Mzk4NTQzNzF9.RYqCyfKFeQLkIomb7XH40Pz9YlVta4nhqNzKdxAFCN0
+
 ### Get all exercises
 GET {{baseUrl}}/exercises
 Authorization: Bearer {{authToken}}

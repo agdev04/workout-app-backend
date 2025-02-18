@@ -18,6 +18,8 @@ pub mod categories;
 pub mod equipment;
 pub mod exercises;
 pub mod meals;
+pub mod workouts;
+pub mod programmes;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -31,8 +33,9 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
 
         let cors = Cors::default()
-            .allowed_origin("http://localhost:5173")
-            .allowed_methods(vec!["GET", "POST", "PUT", "DELETE", "OPTIONS"])
+            // .allowed_origin("http://localhost:3000")
+            .allow_any_origin()
+            .allowed_methods(vec!["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"])
             .allowed_headers(vec![actix_web::http::header::AUTHORIZATION, actix_web::http::header::ACCEPT])
             .allowed_header(actix_web::http::header::CONTENT_TYPE)
             .supports_credentials();

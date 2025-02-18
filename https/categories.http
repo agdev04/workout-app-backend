@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:8000
-@authToken = 
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3Mzk4Njg0Mzh9.x-UydMPT73ZZXcIZJ261w9TaSyFXPq48_T9ou3PRu_s
 
 ### Get all categories
 GET {{baseUrl}}/categories

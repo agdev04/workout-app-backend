@@ -94,6 +94,39 @@ diesel::table! {
 }
 
 diesel::table! {
+    programme_days (id) {
+        id -> Int4,
+        programme_week_id -> Int4,
+        day_number -> Int4,
+        exercise_id -> Int4,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+diesel::table! {
+    programme_weeks (id) {
+        id -> Int4,
+        programme_id -> Int4,
+        week_number -> Int4,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+diesel::table! {
+    programmes (id) {
+        id -> Int4,
+        name -> Varchar,
+        description -> Nullable<Text>,
+        thumbnail_url -> Nullable<Text>,
+        weeks -> Int4,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+diesel::table! {
     users (id) {
         id -> Int4,
         name -> Varchar,
@@ -113,6 +146,7 @@ diesel::table! {
         position -> Int4,
         reps -> Nullable<Int4>,
         duration_seconds -> Nullable<Int4>,
+        rest_seconds -> Nullable<Int4>,
         created_at -> Timestamp,
         updated_at -> Timestamp,
     }
@@ -138,6 +172,9 @@ diesel::joinable!(exercise_equipment -> equipment (equipment_id));
 diesel::joinable!(exercise_equipment -> exercises (exercise_id));
 diesel::joinable!(meal_ingredients -> meals (meal_id));
 diesel::joinable!(meal_instructions -> meals (meal_id));
+diesel::joinable!(programme_days -> exercises (exercise_id));
+diesel::joinable!(programme_days -> programme_weeks (programme_week_id));
+diesel::joinable!(programme_weeks -> programmes (programme_id));
 diesel::joinable!(workout_exercises -> exercises (exercise_id));
 diesel::joinable!(workout_exercises -> workouts (workout_id));
 
@@ -152,6 +189,9 @@ diesel::allow_tables_to_appear_in_same_query!(
     meal_ingredients,
     meal_instructions,
     meals,
+    programme_days,
+    programme_weeks,
+    programmes,
     users,
     workout_exercises,
     workouts,
