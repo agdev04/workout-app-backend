@@ -16,7 +16,6 @@ Authorization: Bearer {{authToken}}
 
 {
     "name": "Strength Training",
-    "description": "Exercises focused on building muscle strength"
 }
 
 ### Update category

@@ -1,5 +1,5 @@
-@baseUrl = http://localhost:8000
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3Mzk4NTQzNzF9.RYqCyfKFeQLkIomb7XH40Pz9YlVta4nhqNzKdxAFCN0
+@baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3Mzk5Nzk0Nzd9.jqp7AbVQgq3fFjRspj6yv7XES195sDa4oCUdUEVyYPY
 
 ### Login to get auth token
 # @name login
@@ -7,8 +7,8 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "admin@admin.com",
-    "password": "password123"
+    "email": "dev@agnieve.com",
+    "password": "pass123"
 }
 
 ### Create a new meal
@@ -44,6 +44,10 @@ Authorization: Bearer {{authToken}}
     "image_url": "https://example.com/images/updated-chicken-stir-fry.jpg"
 }
 
+### Delete a meal
+DELETE {{baseUrl}}/meals/1
+Authorization: Bearer {{authToken}}
+
 ### Add ingredient to a meal
 POST {{baseUrl}}/meals/ingredients
 Content-Type: application/json
@@ -72,8 +76,4 @@ Authorization: Bearer {{authToken}}
 
 ### Delete instruction from a meal
 DELETE {{baseUrl}}/meals/1/instructions/1
-Authorization: Bearer {{authToken}}
-
-### Delete a meal
-DELETE {{baseUrl}}/meals/1
 Authorization: Bearer {{authToken}}

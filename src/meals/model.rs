@@ -4,9 +4,11 @@ use chrono::NaiveDateTime;
 
 #[derive(Debug, Serialize, Deserialize, Queryable, Identifiable)]
 #[diesel(table_name = crate::schema::meals)]
+
+// Relationship to meal instructions is handled through foreign keys and associations
 pub struct Meal {
     pub id: i32,
-    pub name: String,
+    pub name: String, 
     pub category: String,
     pub description: Option<String>,
     pub image_url: Option<String>,
@@ -33,8 +35,9 @@ pub struct UpdateMeal {
 }
 
 // Meal Ingredients models
-#[derive(Debug, Serialize, Deserialize, Queryable, Identifiable)]
+#[derive(Debug, Serialize, Deserialize, Queryable, Identifiable, Associations)]
 #[diesel(table_name = crate::schema::meal_ingredients)]
+#[diesel(belongs_to(Meal))]  // Add relationship to parent meal
 pub struct MealIngredient {
     pub id: i32,
     pub meal_id: i32,
@@ -51,8 +54,9 @@ pub struct NewMealIngredient {
 }
 
 // Meal Instructions models
-#[derive(Debug, Serialize, Deserialize, Queryable, Identifiable)]
+#[derive(Debug, Serialize, Deserialize, Queryable, Identifiable, Associations)]
 #[diesel(table_name = crate::schema::meal_instructions)]
+#[diesel(belongs_to(Meal))]  // Add relationship to parent meal
 pub struct MealInstruction {
     pub id: i32,
     pub meal_id: i32,

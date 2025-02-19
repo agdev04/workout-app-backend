@@ -1,5 +1,5 @@
-@baseUrl = http://localhost:8000
-@authToken = 
+@baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjIiLCJleHAiOjE3Mzk5MzYxOTR9.Bqi4MZlCtmj9aBtx0QaTW6j-WW7IiRpBiFRlFGMLgek
 
 ### Get all users
 GET {{baseUrl}}/users
@@ -28,11 +28,7 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    "name": "John Doe Updated",
-    "email": "john.updated@example.com",
-    "password": "newpassword123",
-    "role": "user",
-    "status": "active"
+    "role": "admin"
 }
 
 ### Delete user

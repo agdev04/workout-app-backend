@@ -91,12 +91,43 @@ pub async fn get_exercise_list() -> Result<HttpResponse> {
 pub async fn get_exercise(id: web::Path<i32>) -> Result<HttpResponse> {
     let mut connection = establish_connection();
     let exercise_id = id.into_inner();
-    let result = exercises::table
+    let exercise = exercises::table
         .find(exercise_id)
         .first::<Exercise>(&mut connection)
         .map_err(|e| actix_web::error::ErrorInternalServerError(e))?;
 
-    Ok(HttpResponse::Ok().json(result))
+    let body_part_list: Vec<SubData> = exercise_body_parts::table
+        .inner_join(body_parts::table)
+        .filter(exercise_body_parts::exercise_id.eq(exercise_id))
+        .select((exercise_body_parts::body_part_id, body_parts::name))
+        .load(&mut connection)
+        .unwrap_or_default();
+
+    let category_list: Vec<SubData> = exercise_categories::table
+        .inner_join(categories::table)
+        .filter(exercise_categories::exercise_id.eq(exercise_id))
+        .select((exercise_categories::category_id, categories::name))
+        .load(&mut connection)
+        .unwrap_or_default();
+
+    let equipment_list: Vec<SubData> = exercise_equipment::table
+        .inner_join(equipment::table)
+        .filter(exercise_equipment::exercise_id.eq(exercise_id))
+        .select((exercise_equipment::equipment_id, equipment::name))
+        .load(&mut connection)
+        .unwrap_or_default();
+
+    let exercise_with_relations = ExerciseWithRelations {
+        exercise,
+        body_parts: body_part_list,
+        categories: category_list,
+        equipment: equipment_list,
+    };
+
+    Ok(HttpResponse::Ok().json(json!({
+        "status": "success",
+        "data": exercise_with_relations
+    })))
 }
 
 pub async fn update_exercise(id: web::Path<i32>, exercise: web::Json<UpdateExercise>) -> Result<HttpResponse> {
