@@ -50,7 +50,7 @@ async fn main() -> std::io::Result<()> {
             .configure(guard_config)
             .wrap(Logger::default())
     })
-    .bind(("0.0.0.0", 8000))?
+    .bind(("0.0.0.0", 3000))?
     .run()
     .await
 }
