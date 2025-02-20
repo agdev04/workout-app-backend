@@ -1,5 +1,6 @@
-@baseUrl = http://localhost:8000
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3Mzk4NTkwNjh9.TxSKghRw9srg69NiXis7LTuaARMGjW4l_J18aDB9gTo
+@baseUrl = http://localhost:3000
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3NDAwNzAzNDV9.PrZHQak1Hv2E8Ea1A2ylIJuMpuI7ZXFPeCK1B4EPs5U
+
 ### Login to get auth token
 # @name login
 POST {{baseUrl}}/auth/login
@@ -52,12 +53,13 @@ Authorization: Bearer {{authToken}}
     "workout_id": 1,
     "exercise_id": 1,
     "reps": 12,
+    "duration_seconds": 20,
     "rest_seconds": 60,
     "position" : 1
 }
 
 ### Delete exercise from a workout
-DELETE {{baseUrl}}/workouts/1/exercises/1
+DELETE {{baseUrl}}/workouts/exercises/3
 Authorization: Bearer {{authToken}}
 
 ### Delete a workout

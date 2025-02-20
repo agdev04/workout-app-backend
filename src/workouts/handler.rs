@@ -153,14 +153,13 @@ pub async fn add_workout_exercise(new_exercise: web::Json<NewWorkoutExercise>) -
     })))
 }
 
-pub async fn delete_workout_exercise(params: web::Path<(i32, i32)>) -> Result<HttpResponse> {
+pub async fn delete_workout_exercise(params: web::Path<i32>) -> Result<HttpResponse> {
     let mut connection = establish_connection();
-    let (workout_id, exercise_id) = params.into_inner();
+    let id = params.into_inner();
 
     diesel::delete(
         workout_exercises::table
-            .filter(workout_exercises::workout_id.eq(workout_id))
-            .filter(workout_exercises::exercise_id.eq(exercise_id))
+        .find(id)
     )
         .execute(&mut connection)
         .map_err(|e| actix_web::error::ErrorInternalServerError(e))?;

@@ -12,6 +12,6 @@ pub fn workouts_config(cfg: &mut web::ServiceConfig) {
             .route("/{id}", web::delete().to(delete_workout))
             // Workout Exercises
             .route("/exercises", web::post().to(add_workout_exercise))
-            .route("/{workout_id}/exercises/{exercise_id}", web::delete().to(delete_workout_exercise))
+            .route("/exercises/{id}", web::delete().to(delete_workout_exercise))
     );
 }

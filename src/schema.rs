@@ -64,6 +64,22 @@ diesel::table! {
 }
 
 diesel::table! {
+    favorite_meals (id) {
+        id -> Int4,
+        user_id -> Int4,
+        meal_id -> Int4,
+    }
+}
+
+diesel::table! {
+    favorite_workouts (id) {
+        id -> Int4,
+        user_id -> Int4,
+        workout_id -> Int4,
+    }
+}
+
+diesel::table! {
     meal_ingredients (id) {
         id -> Int4,
         meal_id -> Int4,
@@ -170,6 +186,10 @@ diesel::joinable!(exercise_categories -> categories (category_id));
 diesel::joinable!(exercise_categories -> exercises (exercise_id));
 diesel::joinable!(exercise_equipment -> equipment (equipment_id));
 diesel::joinable!(exercise_equipment -> exercises (exercise_id));
+diesel::joinable!(favorite_meals -> meals (meal_id));
+diesel::joinable!(favorite_meals -> users (user_id));
+diesel::joinable!(favorite_workouts -> users (user_id));
+diesel::joinable!(favorite_workouts -> workouts (workout_id));
 diesel::joinable!(meal_ingredients -> meals (meal_id));
 diesel::joinable!(meal_instructions -> meals (meal_id));
 diesel::joinable!(programme_days -> exercises (exercise_id));
@@ -186,6 +206,8 @@ diesel::allow_tables_to_appear_in_same_query!(
     exercise_categories,
     exercise_equipment,
     exercises,
+    favorite_meals,
+    favorite_workouts,
     meal_ingredients,
     meal_instructions,
     meals,
