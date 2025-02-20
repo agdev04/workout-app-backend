@@ -12,9 +12,9 @@ pub fn programmes_config(cfg: &mut web::ServiceConfig) {
             .route("/{id}", web::delete().to(delete_programme))
             // Programme Week routes
             .route("/weeks", web::post().to(add_programme_week))
-            .route("/{programme_id}/weeks/{week_number}", web::delete().to(delete_programme_week))
-            // Programme Day routes
-            .route("/days", web::post().to(add_programme_day))
-            .route("/{programme_week_id}/days/{day_number}/exercises/{exercise_id}", web::delete().to(delete_programme_day))
+            .route("/weeks/{id}", web::delete().to(delete_programme_week))
+            // Programme Day Exercise routes
+            .route("/exercises", web::post().to(add_programme_day_exercise))
+            .route("/exercises/{id}", web::delete().to(delete_programme_day_exercise))
     );
 }

@@ -5,6 +5,7 @@ CREATE TABLE exercises (
   description TEXT,
   is_active BOOLEAN NOT NULL DEFAULT true,
   thumbnail_url TEXT,
+  video_url TEXT,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

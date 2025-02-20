@@ -58,6 +58,7 @@ diesel::table! {
         description -> Nullable<Text>,
         is_active -> Bool,
         thumbnail_url -> Nullable<Text>,
+        video_url -> Nullable<Text>,
         created_at -> Timestamp,
         updated_at -> Timestamp,
     }
@@ -110,13 +111,15 @@ diesel::table! {
 }
 
 diesel::table! {
-    programme_days (id) {
+    programme_days_exercises (id) {
         id -> Int4,
         programme_week_id -> Int4,
-        day_number -> Int4,
         exercise_id -> Int4,
-        created_at -> Timestamp,
-        updated_at -> Timestamp,
+        day_number -> Int4,
+        position -> Int4,
+        reps -> Nullable<Int4>,
+        duration_seconds -> Nullable<Int4>,
+        rest_seconds -> Int4,
     }
 }
 
@@ -124,9 +127,8 @@ diesel::table! {
     programme_weeks (id) {
         id -> Int4,
         programme_id -> Int4,
+        name -> Varchar,
         week_number -> Int4,
-        created_at -> Timestamp,
-        updated_at -> Timestamp,
     }
 }
 
@@ -135,8 +137,8 @@ diesel::table! {
         id -> Int4,
         name -> Varchar,
         description -> Nullable<Text>,
-        thumbnail_url -> Nullable<Text>,
-        weeks -> Int4,
+        image_url -> Nullable<Text>,
+        total_weeks -> Int4,
         created_at -> Timestamp,
         updated_at -> Timestamp,
     }
@@ -192,8 +194,8 @@ diesel::joinable!(favorite_workouts -> users (user_id));
 diesel::joinable!(favorite_workouts -> workouts (workout_id));
 diesel::joinable!(meal_ingredients -> meals (meal_id));
 diesel::joinable!(meal_instructions -> meals (meal_id));
-diesel::joinable!(programme_days -> exercises (exercise_id));
-diesel::joinable!(programme_days -> programme_weeks (programme_week_id));
+diesel::joinable!(programme_days_exercises -> exercises (exercise_id));
+diesel::joinable!(programme_days_exercises -> programme_weeks (programme_week_id));
 diesel::joinable!(programme_weeks -> programmes (programme_id));
 diesel::joinable!(workout_exercises -> exercises (exercise_id));
 diesel::joinable!(workout_exercises -> workouts (workout_id));
@@ -211,7 +213,7 @@ diesel::allow_tables_to_appear_in_same_query!(
     meal_ingredients,
     meal_instructions,
     meals,
-    programme_days,
+    programme_days_exercises,
     programme_weeks,
     programmes,
     users,

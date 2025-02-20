@@ -1,15 +1,5 @@
-@baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3NDAwNzIyNDd9.aChvkolKoNdYInijNHEXAqY6JDNR3aUxT25tjagBFaw
-
-### Login to get auth token
-# @name login
-POST {{baseUrl}}/auth/login
-Content-Type: application/json
-
-{
-    "email": "dev@agnieve.com",
-    "password": "pass123"
-}
+@baseUrl = http://localhost:8000
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3NDAwNzAzNDV9.PrZHQak1Hv2E8Ea1A2ylIJuMpuI7ZXFPeCK1B4EPs5U
 
 ### Create a new programme
 POST {{baseUrl}}/programmes
@@ -17,10 +7,10 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    "name": "12-Week Strength Programme",
-    "description": "A comprehensive strength training programme",
-    "thumbnail_url": "image-url",
-    "weeks" : 2
+    "name": "12-Week Strength Program",
+    "description": "A comprehensive strength training program",
+    "image_url": "https://example.com/program-image.jpg",
+    "total_weeks": 12
 }
 
 ### Get all programmes
@@ -37,9 +27,10 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    "name": "Updated Strength Programme",
-    "description": "Updated programme description",
-    "weeks": 8
+    "name": "Updated 12-Week Strength Program",
+    "description": "An updated comprehensive strength training program",
+    "image_url": "https://example.com/updated-program-image.jpg",
+    "total_weeks": 14
 }
 
 ### Delete a programme
@@ -53,31 +44,29 @@ Authorization: Bearer {{authToken}}
 
 {
     "programme_id": 1,
-    "week_number": 1,
     "name": "Week 1 - Foundation",
-    "description": "Focus on basic compound movements"
+    "week_number": 1
 }
 
 ### Delete a programme week
-DELETE {{baseUrl}}/programmes/1/weeks/1
+DELETE {{baseUrl}}/programmes/weeks/1
 Authorization: Bearer {{authToken}}
 
-### Add a programme day with exercise
-POST {{baseUrl}}/programmes/days
+### Add a programme day exercise
+POST {{baseUrl}}/programmes/exercises
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
     "programme_week_id": 1,
-    "day_number": 1,
-    "name": "Day 1 - Push",
-    "description": "Push day focusing on chest and shoulders",
     "exercise_id": 1,
-    "sets": 3,
+    "day_number": 1,
+    "position": 1,
     "reps": 12,
-    "rest_duration": 60
+    "duration_seconds": 60,
+    "rest_seconds": 90
 }
 
 ### Delete a programme day exercise
-DELETE {{baseUrl}}/programmes/1/days/1/exercises/1
+DELETE {{baseUrl}}/programmes/exercises/1
 Authorization: Bearer {{authToken}}

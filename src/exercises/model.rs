@@ -10,6 +10,7 @@ pub struct Exercise {
     pub description: Option<String>,
     pub is_active: bool,
     pub thumbnail_url: Option<String>,
+    pub video_url: Option<String>,
     pub created_at: NaiveDateTime,
     pub updated_at: NaiveDateTime,
 }
@@ -21,6 +22,7 @@ pub struct NewExercise {
     pub description: Option<String>,
     pub is_active: bool,
     pub thumbnail_url: Option<String>,
+    pub video_url: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize, AsChangeset)]
@@ -30,6 +32,7 @@ pub struct UpdateExercise {
     pub description: Option<String>,
     pub is_active: Option<bool>,
     pub thumbnail_url: Option<String>,
+    pub video_url: Option<String>,
 }
 
 // Exercise relationship models
