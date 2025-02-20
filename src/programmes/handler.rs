@@ -15,7 +15,7 @@ pub struct GenericResponse {
 pub struct ProgrammeWithDetails {
     #[serde(flatten)]
     pub programme: Programme,
-    pub weeks: Vec<ProgrammeWeekWithDays>,
+    pub week_list: Vec<ProgrammeWeekWithDays>,
 }
 
 #[derive(Debug, serde::Serialize)]
@@ -57,7 +57,7 @@ pub async fn get_programme_list() -> Result<HttpResponse> {
     let programmes_with_details: Vec<ProgrammeWithDetails> = programmes_list
         .into_iter()
         .map(|programme| {
-            let weeks = programme_weeks::table
+            let week_list = programme_weeks::table
                 .filter(programme_weeks::programme_id.eq(programme.id))
                 .load::<ProgrammeWeek>(connection)
                 .unwrap_or_default()
@@ -85,7 +85,7 @@ pub async fn get_programme_list() -> Result<HttpResponse> {
 
             ProgrammeWithDetails {
                 programme,
-                weeks,
+                week_list,
             }
         })
         .collect();
@@ -105,7 +105,7 @@ pub async fn get_programme(id: web::Path<i32>) -> Result<HttpResponse> {
         .first::<Programme>(&mut connection)
         .map_err(|e| actix_web::error::ErrorInternalServerError(e))?;
 
-    let weeks = programme_weeks::table
+    let week_list = programme_weeks::table
         .filter(programme_weeks::programme_id.eq(programme_id))
         .load::<ProgrammeWeek>(&mut connection)
         .unwrap_or_default()
@@ -133,7 +133,7 @@ pub async fn get_programme(id: web::Path<i32>) -> Result<HttpResponse> {
 
     let programme_with_details = ProgrammeWithDetails {
         programme,
-        weeks,
+        week_list,
     };
 
     Ok(HttpResponse::Ok().json(json!({

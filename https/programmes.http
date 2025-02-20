@@ -1,5 +1,5 @@
-@baseUrl = http://localhost:8000
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3Mzk4NjA0MDZ9.S7VEM8ftuMPjwiso3sTgwMJ-BECAUUq2xwK9zWKMZPo
+@baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3NDAwNzIyNDd9.aChvkolKoNdYInijNHEXAqY6JDNR3aUxT25tjagBFaw
 
 ### Login to get auth token
 # @name login
@@ -19,7 +19,7 @@ Authorization: Bearer {{authToken}}
 {
     "name": "12-Week Strength Programme",
     "description": "A comprehensive strength training programme",
-    "duration_weeks": 12,
+    "thumbnail_url": "image-url",
     "weeks" : 2
 }
 
@@ -39,7 +39,7 @@ Authorization: Bearer {{authToken}}
 {
     "name": "Updated Strength Programme",
     "description": "Updated programme description",
-    "duration_weeks": 8
+    "weeks": 8
 }
 
 ### Delete a programme
