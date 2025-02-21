@@ -1,5 +1,5 @@
-@baseUrl = http://localhost:8080
-@token = 
+@baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3NDAxMjc5OTZ9.EJg3EiT9wi81pKtso0El6E83zj_QMBqrWqLUt3Oy_WA
 
 ### Get Statistics
 GET {{baseUrl}}/statistics

@@ -7,6 +7,7 @@ CREATE TABLE programme_progress (
     day_number INTEGER NOT NULL,
     completed BOOLEAN NOT NULL DEFAULT false,
     actual_reps INTEGER,
+    actual_sets_number INTEGER,
     actual_duration_seconds INTEGER,
     actual_rest_seconds INTEGER,
     notes TEXT,

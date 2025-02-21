@@ -23,6 +23,7 @@ CREATE TABLE programme_days_exercises (
     exercise_id INTEGER NOT NULL REFERENCES exercises(id) ON DELETE CASCADE,
     day_number INTEGER NOT NULL CHECK (day_number BETWEEN 1 AND 7),
     position INTEGER NOT NULL,
+    sets_number INTEGER NOT NULL,
     reps INTEGER,
     duration_seconds INTEGER,
     rest_seconds INTEGER NOT NULL,

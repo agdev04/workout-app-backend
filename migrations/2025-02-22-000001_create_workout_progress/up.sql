@@ -7,6 +7,7 @@ CREATE TABLE workout_progress (
     workout_exercise_id INTEGER NOT NULL REFERENCES workout_exercises(id) ON DELETE CASCADE,
     completed BOOLEAN NOT NULL DEFAULT false,
     actual_reps INTEGER,
+    actual_sets_number INTEGER,
     actual_duration_seconds INTEGER,
     notes TEXT,
     completed_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
