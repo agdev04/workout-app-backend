@@ -1,0 +1,20 @@
+@baseUrl = http://localhost:3000
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3NDAwNzAzNDV9.PrZHQak1Hv2E8Ea1A2ylIJuMpuI7ZXFPeCK1B4EPs5U
+
+### Add workout to favorites
+POST {{baseUrl}}/favorite-workouts
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "user_id": 1,
+    "workout_id": 1
+}
+
+### Get user's favorite workouts
+GET {{baseUrl}}/favorite-workouts/user/1
+Authorization: Bearer {{authToken}}
+
+### Remove workout from favorites
+DELETE {{baseUrl}}/favorite-workouts/1
+Authorization: Bearer {{authToken}}

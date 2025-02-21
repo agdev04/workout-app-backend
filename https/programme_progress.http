@@ -1,0 +1,34 @@
+@baseUrl = http://localhost:3000
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3NDAwNzAzNDV9.PrZHQak1Hv2E8Ea1A2ylIJuMpuI7ZXFPeCK1B4EPs5U
+
+### Record programme progress
+POST {{baseUrl}}/programme-progress
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "user_id": 1,
+    "programme_id": 1,
+    "completed_at": "2024-02-23T10:00:00Z",
+    "notes": "Completed first week of the programme",
+    "status": "in_progress"
+}
+
+### Update programme progress
+PATCH {{baseUrl}}/programme-progress/1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "completed_at": "2024-02-23T11:30:00Z",
+    "notes": "Updated progress notes",
+    "status": "completed"
+}
+
+### Get user's programme progress
+GET {{baseUrl}}/programme-progress/user/1
+Authorization: Bearer {{authToken}}
+
+### Get programme progress by programme ID
+GET {{baseUrl}}/programme-progress/programme/1
+Authorization: Bearer {{authToken}}

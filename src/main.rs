@@ -20,6 +20,12 @@ pub mod exercises;
 pub mod meals;
 pub mod workouts;
 pub mod programmes;
+pub mod statistics;
+pub mod meal_plans;
+pub mod favorite_meals;
+pub mod favorite_workouts;
+pub mod programme_progress;
+pub mod workout_progress;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {

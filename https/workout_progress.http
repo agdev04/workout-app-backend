@@ -1,0 +1,36 @@
+@baseUrl = http://localhost:3000
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3NDAwNzAzNDV9.PrZHQak1Hv2E8Ea1A2ylIJuMpuI7ZXFPeCK1B4EPs5U
+
+### Record workout progress
+POST {{baseUrl}}/workout-progress
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "user_id": 1,
+    "workout_id": 1,
+    "completed_at": "2024-02-23T10:00:00Z",
+    "duration_minutes": 45,
+    "calories_burned": 300,
+    "notes": "Great workout session"
+}
+
+### Update workout progress
+PATCH {{baseUrl}}/workout-progress/1
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "completed_at": "2024-02-23T11:30:00Z",
+    "duration_minutes": 50,
+    "calories_burned": 350,
+    "notes": "Updated workout details"
+}
+
+### Get user's workout progress
+GET {{baseUrl}}/workout-progress/user/1
+Authorization: Bearer {{authToken}}
+
+### Get workout progress by workout ID
+GET {{baseUrl}}/workout-progress/workout/1
+Authorization: Bearer {{authToken}}

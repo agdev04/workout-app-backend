@@ -1,5 +1,5 @@
-@baseUrl = http://localhost:8000
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3NDAwNzAzNDV9.PrZHQak1Hv2E8Ea1A2ylIJuMpuI7ZXFPeCK1B4EPs5U
+@baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3NDAxMTAwMDZ9.VQtrOceXh5pJH72FRgYuy_XhnGKcVQAhM_Y8sysZqmo
 
 ### Create a new programme
 POST {{baseUrl}}/programmes
@@ -43,7 +43,7 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    "programme_id": 1,
+    "programme_id": 3,
     "name": "Week 1 - Foundation",
     "week_number": 1
 }

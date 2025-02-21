@@ -69,6 +69,8 @@ diesel::table! {
         id -> Int4,
         user_id -> Int4,
         meal_id -> Int4,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
     }
 }
 
@@ -77,6 +79,8 @@ diesel::table! {
         id -> Int4,
         user_id -> Int4,
         workout_id -> Int4,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
     }
 }
 
@@ -95,6 +99,32 @@ diesel::table! {
         meal_id -> Int4,
         step_number -> Int4,
         instruction -> Text,
+    }
+}
+
+diesel::table! {
+    meal_plan_meals (id) {
+        id -> Int4,
+        meal_plan_id -> Int4,
+        meal_id -> Int4,
+        day_of_week -> Int4,
+        meal_time -> Varchar,
+        notes -> Nullable<Text>,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+diesel::table! {
+    meal_plans (id) {
+        id -> Int4,
+        user_id -> Int4,
+        name -> Varchar,
+        description -> Nullable<Text>,
+        start_date -> Date,
+        end_date -> Date,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
     }
 }
 
@@ -120,6 +150,25 @@ diesel::table! {
         reps -> Nullable<Int4>,
         duration_seconds -> Nullable<Int4>,
         rest_seconds -> Int4,
+    }
+}
+
+diesel::table! {
+    programme_progress (id) {
+        id -> Int4,
+        user_id -> Int4,
+        programme_id -> Int4,
+        programme_week_id -> Int4,
+        exercise_id -> Int4,
+        day_number -> Int4,
+        completed -> Bool,
+        actual_reps -> Nullable<Int4>,
+        actual_duration_seconds -> Nullable<Int4>,
+        actual_rest_seconds -> Nullable<Int4>,
+        notes -> Nullable<Text>,
+        completed_at -> Nullable<Timestamp>,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
     }
 }
 
@@ -171,6 +220,23 @@ diesel::table! {
 }
 
 diesel::table! {
+    workout_progress (id) {
+        id -> Int4,
+        user_id -> Int4,
+        workout_id -> Int4,
+        exercise_id -> Int4,
+        workout_exercise_id -> Int4,
+        completed -> Bool,
+        actual_reps -> Nullable<Int4>,
+        actual_duration_seconds -> Nullable<Int4>,
+        notes -> Nullable<Text>,
+        completed_at -> Timestamp,
+        created_at -> Timestamp,
+        updated_at -> Timestamp,
+    }
+}
+
+diesel::table! {
     workouts (id) {
         id -> Int4,
         name -> Varchar,
@@ -194,11 +260,22 @@ diesel::joinable!(favorite_workouts -> users (user_id));
 diesel::joinable!(favorite_workouts -> workouts (workout_id));
 diesel::joinable!(meal_ingredients -> meals (meal_id));
 diesel::joinable!(meal_instructions -> meals (meal_id));
+diesel::joinable!(meal_plan_meals -> meal_plans (meal_plan_id));
+diesel::joinable!(meal_plan_meals -> meals (meal_id));
+diesel::joinable!(meal_plans -> users (user_id));
 diesel::joinable!(programme_days_exercises -> exercises (exercise_id));
 diesel::joinable!(programme_days_exercises -> programme_weeks (programme_week_id));
+diesel::joinable!(programme_progress -> exercises (exercise_id));
+diesel::joinable!(programme_progress -> programme_weeks (programme_week_id));
+diesel::joinable!(programme_progress -> programmes (programme_id));
+diesel::joinable!(programme_progress -> users (user_id));
 diesel::joinable!(programme_weeks -> programmes (programme_id));
 diesel::joinable!(workout_exercises -> exercises (exercise_id));
 diesel::joinable!(workout_exercises -> workouts (workout_id));
+diesel::joinable!(workout_progress -> exercises (exercise_id));
+diesel::joinable!(workout_progress -> users (user_id));
+diesel::joinable!(workout_progress -> workout_exercises (workout_exercise_id));
+diesel::joinable!(workout_progress -> workouts (workout_id));
 
 diesel::allow_tables_to_appear_in_same_query!(
     body_parts,
@@ -212,11 +289,15 @@ diesel::allow_tables_to_appear_in_same_query!(
     favorite_workouts,
     meal_ingredients,
     meal_instructions,
+    meal_plan_meals,
+    meal_plans,
     meals,
     programme_days_exercises,
+    programme_progress,
     programme_weeks,
     programmes,
     users,
     workout_exercises,
+    workout_progress,
     workouts,
 );

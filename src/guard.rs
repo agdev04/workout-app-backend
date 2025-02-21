@@ -1,7 +1,7 @@
 
 
 use actix_web::{middleware::from_fn, web};
-use crate::{body_parts::body_part_config, categories::category_config, equipment::equipment_config, exercises::exercises_config, meals::meals_config, programmes::programmes_config, upload::route::upload_config, users::route::user_config, workouts::workouts_config};
+use crate::{body_parts::body_part_config, categories::category_config, equipment::equipment_config, exercises::exercises_config, meals::meals_config, programmes::programmes_config, statistics::statistics_config, upload::route::upload_config, users::route::user_config, workouts::workouts_config};
 
 use std::env;
 
@@ -86,7 +86,18 @@ async fn get_middleware(
                           
                           match user {
                               Ok(user) => {
-                                  if user.role != "admin" || user.status != "active" {
+                                  let path = req.path();
+                                  let is_special_module = path.starts_with("/api/workout-progress") ||
+                                      path.starts_with("/programme-progress") ||
+                                      path.starts_with("/favorite-meals") ||
+                                      path.starts_with("/favorite-workouts") ||
+                                      path.starts_with("/meal-plans");
+
+                                  if is_special_module {
+                                      if user.status != "active" {
+                                          return Err(ErrorUnauthorized("User account is not active"));
+                                      }
+                                  } else if user.role != "admin" || user.status != "active" {
                                       return Err(ErrorUnauthorized("Insufficient permissions"));
                                   }
                                   req.extensions_mut().insert(token_data.claims.company.clone());
@@ -121,6 +132,7 @@ pub fn guard_config(cfg: &mut web::ServiceConfig) {
     .configure(meals_config)
     .configure(workouts_config)
     .configure(programmes_config)
+    .configure(statistics_config)
   );
 }
  
