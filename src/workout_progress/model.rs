@@ -11,6 +11,7 @@ pub struct WorkoutProgress {
     pub exercise_id: i32,
     pub workout_exercise_id: i32,
     pub completed: bool,
+    pub actual_sets_number: Option<i32>,
     pub actual_reps: Option<i32>,
     pub actual_duration_seconds: Option<i32>,
     pub notes: Option<String>,
@@ -27,6 +28,7 @@ pub struct NewWorkoutProgress {
     pub exercise_id: i32,
     pub workout_exercise_id: i32,
     pub completed: bool,
+    pub actual_sets_number: Option<i32>,
     pub actual_reps: Option<i32>,
     pub actual_duration_seconds: Option<i32>,
     pub notes: Option<String>,
@@ -37,6 +39,7 @@ pub struct NewWorkoutProgress {
 pub struct UpdateWorkoutProgress {
     pub completed: Option<bool>,
     pub actual_reps: Option<i32>,
+    pub actual_sets_number: Option<i32>,
     pub actual_duration_seconds: Option<i32>,
     pub notes: Option<String>,
 }

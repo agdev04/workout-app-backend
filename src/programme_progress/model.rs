@@ -14,6 +14,7 @@ pub struct ProgrammeProgress {
     pub day_number: i32,
     pub completed: bool,
     pub actual_reps: Option<i32>,
+    pub actual_sets_number: Option<i32>,
     pub actual_duration_seconds: Option<i32>,
     pub actual_rest_seconds: Option<i32>,
     pub notes: Option<String>,
@@ -31,6 +32,7 @@ pub struct NewProgrammeProgress {
     pub exercise_id: i32,
     pub day_number: i32,
     pub completed: bool,
+    pub actual_sets_number: i32,
     pub actual_reps: Option<i32>,
     pub actual_duration_seconds: Option<i32>,
     pub actual_rest_seconds: Option<i32>,
@@ -43,6 +45,7 @@ pub struct NewProgrammeProgress {
 pub struct UpdateProgrammeProgress {
     pub completed: Option<bool>,
     pub actual_reps: Option<i32>,
+    pub actual_sets_number: Option<i32>,
     pub actual_duration_seconds: Option<i32>,
     pub actual_rest_seconds: Option<i32>,
     pub notes: Option<String>,
