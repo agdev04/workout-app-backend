@@ -89,6 +89,7 @@ async fn get_middleware(
                                   let path = req.path();
                                   let is_special_module = path.starts_with("/api/workout-progress") ||
                                       path.starts_with("/programme-progress") ||
+                                      path.starts_with("/workout-progress") ||
                                       path.starts_with("/favorite-meals") ||
                                       path.starts_with("/favorite-workouts") ||
                                       path.starts_with("/meal-plans");
