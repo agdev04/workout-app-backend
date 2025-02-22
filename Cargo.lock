@@ -1010,6 +1010,7 @@ dependencies = [
  "futures",
  "futures-util",
  "jsonwebtoken",
+ "log",
  "rand",
  "serde",
  "serde_json",

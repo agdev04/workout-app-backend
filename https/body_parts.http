@@ -1,5 +1,5 @@
-@baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3Mzk5MzU4ODB9.PflCZDAKUmsUsmtU4zgvzkz0YPS3CWH8w4kdun9ud8Q
+@baseUrl = http://localhost:3000
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjE3NDAyMDE0NDR9.hXOxTd62FccziKLk1FtYvmSMH2raCZ_EejyuSZrV7pQ
 
 ### Get all body parts
 GET {{baseUrl}}/body-parts

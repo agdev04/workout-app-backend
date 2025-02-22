@@ -1,6 +1,6 @@
-@baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
-@email = dev@agnieve.com
-@password = pass123
+@baseUrl = http://localhost:3000
+@email =john@example.com
+@password =pass123
 @authToken = {{login.response.body.token}}
 
 ### Register a new user

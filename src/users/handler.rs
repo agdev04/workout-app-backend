@@ -136,3 +136,27 @@ pub async fn delete_user(id: web::Path<i32>) -> Result<HttpResponse> {
         }))
     }
 }
+
+pub async fn me(user_id: web::ReqData<String>) -> Result<HttpResponse> {
+    let mut connection = establish_connection();
+    let user_id: i32 = user_id.parse().unwrap_or(0);
+
+    match users::table.find(user_id).first::<User>(&mut connection) {
+        Ok(user) => {
+            Ok(HttpResponse::Ok().json(json!({
+                "status": "success",
+                "data": {
+                    "id": user.id,
+                    "name": user.name,
+                    "email": user.email,
+                    "role": user.role,
+                    "status": user.status
+                }
+            })))
+        },
+        Err(_) => Ok(HttpResponse::NotFound().json(json!({
+            "status": "error",
+            "message": "User not found"
+        })))
+    }
+}

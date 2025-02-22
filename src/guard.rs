@@ -5,9 +5,7 @@ use crate::{body_parts::body_part_config, categories::category_config, equipment
 
 use std::env;
 
-use actix_web::{
-  body::MessageBody, dev::{ServiceRequest, ServiceResponse}, middleware::Next, Error, HttpMessage,
-};
+use actix_web::{body::MessageBody, dev::{ServiceRequest, ServiceResponse}, middleware::Next, Error, HttpMessage};
 use actix_web::error::ErrorUnauthorized;
 use jsonwebtoken::{errors::ErrorKind, Algorithm, Validation, decode, DecodingKey};
 use crate::users::handler::Claims;
@@ -87,19 +85,21 @@ async fn get_middleware(
                           match user {
                               Ok(user) => {
                                   let path = req.path();
-                                  let is_special_module = path.starts_with("/api/workout-progress") ||
+                                  let is_special_module = path.starts_with("/workout-progress") ||
                                       path.starts_with("/programme-progress") ||
-                                      path.starts_with("/workout-progress") ||
                                       path.starts_with("/favorite-meals") ||
                                       path.starts_with("/favorite-workouts") ||
                                       path.starts_with("/meal-plans");
+
+                                  let is_public_get = req.method().as_str() == "GET";
 
                                   if is_special_module {
                                       if user.status != "active" {
                                           return Err(ErrorUnauthorized("User account is not active"));
                                       }
-                                  } else if user.role != "admin" || user.status != "active" {
-                                      return Err(ErrorUnauthorized("Insufficient permissions"));
+                                  } else if !is_public_get && (user.role != "admin" || user.status != "active") {
+                                      let error_msg = format!("Insufficient permissions: {}", req.method().as_str());
+                                      return Err(ErrorUnauthorized(error_msg));
                                   }
                                   req.extensions_mut().insert(token_data.claims.company.clone());
                                   next.call(req).await

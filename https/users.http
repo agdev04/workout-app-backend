@@ -1,5 +1,9 @@
-@baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjIiLCJleHAiOjE3Mzk5MzYxOTR9.Bqi4MZlCtmj9aBtx0QaTW6j-WW7IiRpBiFRlFGMLgek
+@baseUrl = http://localhost:3000
+@authToken =  eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjE3NDAyMDM5MTd9.2fQJ75HuTfCfo_csYHtUdoSiMp2ykCnUXg1Yp5u6rSY
+
+### Me (Default Auth)
+GET {{baseUrl}}/users/auth/me
+Authorization: Bearer {{authToken}}
 
 ### Get all users
 GET {{baseUrl}}/users
@@ -15,15 +19,15 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    "name": "John Doe",
+    "name": "John",
     "email": "john@example.com",
-    "password": "password123",
+    "password": "pass123",
     "role": "user",
     "status": "active"
 }
 
 ### Update user
-PUT {{baseUrl}}/users/1
+PUT {{baseUrl}}/users/2
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
@@ -32,5 +36,5 @@ Authorization: Bearer {{authToken}}
 }
 
 ### Delete user
-DELETE {{baseUrl}}/users/1
+DELETE {{baseUrl}}/users/2
 Authorization: Bearer {{authToken}}
