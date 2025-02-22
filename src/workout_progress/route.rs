@@ -1,7 +1,7 @@
 use actix_web::web;
 use super::handler;
 
-pub fn config(cfg: &mut web::ServiceConfig) {
+pub fn workout_progress_config(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/workout-progress")
             .route("", web::post().to(handler::record_progress))

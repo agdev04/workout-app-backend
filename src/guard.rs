@@ -1,7 +1,9 @@
 
 
 use actix_web::{middleware::from_fn, web};
-use crate::{body_parts::body_part_config, categories::category_config, equipment::equipment_config, exercises::exercises_config, meals::meals_config, programmes::programmes_config, statistics::statistics_config, upload::route::upload_config, users::route::user_config, workouts::workouts_config};
+use crate::{
+    body_parts::body_part_config, categories::category_config, equipment::equipment_config, exercises::exercises_config, favorite_meals::route::favorite_meals_config, favorite_workouts::favorite_workouts_config, meal_plans::meal_plans_config, meals::meals_config, programme_progress::programme_progress_config, programmes::programmes_config, statistics::statistics_config, upload::route::upload_config, users::route::user_config, workout_progress::workout_progress_config, workouts::workouts_config
+};
 
 use std::env;
 
@@ -134,6 +136,11 @@ pub fn guard_config(cfg: &mut web::ServiceConfig) {
     .configure(workouts_config)
     .configure(programmes_config)
     .configure(statistics_config)
+    .configure(favorite_meals_config)
+    .configure(favorite_workouts_config)
+    .configure(meal_plans_config)
+    .configure(workout_progress_config)
+    .configure(programme_progress_config)
   );
 }
  
