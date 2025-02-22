@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:3000
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3NDAwNzAzNDV9.PrZHQak1Hv2E8Ea1A2ylIJuMpuI7ZXFPeCK1B4EPs5U
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjE3NDAyNTAwMzV9.5EohxQKxPA1mcCA8ZESoFoTXXpsUzynDy-1utvc0F-U
 
 ### Create a new meal plan
 POST {{baseUrl}}/meal-plans
@@ -7,7 +7,6 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    "user_id": 1,
     "name": "Weekly Meal Plan",
     "start_date": "2024-02-25",
     "end_date": "2024-03-02",
@@ -38,16 +37,21 @@ Authorization: Bearer {{authToken}}
     "end_date": "2024-03-03"
 }
 
+### Delete meal plan
+DELETE {{baseUrl}}/meal-plans/1
+Authorization: Bearer {{authToken}}
+
 ### Add meal to plan
-POST {{baseUrl}}/meal-plans/meals
+POST {{baseUrl}}/meal-plans/1/meals
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
     "meal_plan_id": 1,
     "meal_id": 1,
-    "day": "2024-02-25",
-    "meal_time": "breakfast"
+    "day_of_week": 1,
+    "meal_time": "breakfast",
+    "notes": "test note"
 }
 
 ### Remove meal from plan

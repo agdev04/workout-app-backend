@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:3000
 # @baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjE3NDAyNDA2MTV9.EwEZ6NU3J2ruiWABTHz2jxydPlTGA3QLGgP_uodH2hE
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjE3NDAyNDY3NTl9.FsibSIa_LSWC48bZyK8sr5gLOw1qjgwjw8JUqQSY8tA
 
 ### Add meal to favorites
 POST {{baseUrl}}/favorite-meals

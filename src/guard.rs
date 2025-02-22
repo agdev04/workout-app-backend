@@ -100,7 +100,7 @@ async fn get_middleware(
                                           return Err(ErrorUnauthorized("User account is not active"));
                                       }
                                   } else if !is_public_get && (user.role != "admin" || user.status != "active") {
-                                      let error_msg = format!("Insufficient permissions: {}", req.method().as_str());
+                                      let error_msg = format!("Insufficient permissions: {}", is_special_module);
                                       return Err(ErrorUnauthorized(error_msg));
                                   }
                                   req.extensions_mut().insert(token_data.claims.company.clone());
