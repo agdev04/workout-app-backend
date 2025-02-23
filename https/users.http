@@ -1,8 +1,7 @@
-# @baseUrl = http://localhost:3000
-@baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
+@baseUrl = http://localhost:3000
+# @baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
 
-@authToken =  eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjE3NDAzMDQwNDJ9.DD6NDyiA2moA4RCyNxpjYODdb-H3kweF_5QnK9ntofg
-
+@authToken =  eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjE3NDAzMDY5NjN9.U_20bOimtFvFnD5xugc8P4fFzOoHQT_FCRUBX-Nr9mY
 
 ### Me (Default Auth)
 GET {{baseUrl}}/users/auth/me

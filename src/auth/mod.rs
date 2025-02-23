@@ -60,16 +60,19 @@ async fn authenticate_user(user: web::Json<LoginUser>) -> Result<String, actix_w
 }
 
 async fn create_token(user_id: i32) -> Result<String, actix_web::Error> {
-  // let expiration = Utc::now()
-  //     .checked_add_signed(chrono::Duration::seconds(3600))
-  //     .expect("valid timestamp")
-  //     .timestamp();
+  let seconds_in_10_years = (10.0 * 365.25 * 24.0 * 3600.0) as f64;
+  let duration = chrono::Duration::seconds(seconds_in_10_years as i64);
+
+  let expiration = Utc::now()
+      .checked_add_signed(duration)
+      .expect("valid timestamp")
+      .timestamp();
   
   let my_claims = Claims {
       sub: "someone".to_owned(),
       company: user_id.to_string(),
-      // exp: expiration as usize,
-      exp: 0,
+      exp: expiration as usize,
+      // exp: 0,
   };
 
   let key = env::var("AUTH_TOKEN").unwrap_or_else(|_| "secret_token".to_string());
