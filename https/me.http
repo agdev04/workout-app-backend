@@ -1,5 +1,7 @@
-@baseUrl = http://localhost:8080
-@token = {{login.response.body.token}}
+@baseUrl = http://localhost:3000
+# @baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
+
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjIwNTU5MDE5MTV9.zYlmSXnmAEclLOz47-xeA7XGZOBCM9DlZjS44-TW0LY
 
 ### Login to get token
 # @name login
@@ -22,13 +24,12 @@ Authorization: Bearer {{token}}
 }
 
 ### Update User Information
-PUT {{baseUrl}}/users/me/update
+PATCH {{baseUrl}}/me/update
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "name": "Updated Name",
-    "profile_picture": "image_url",
+    "name": "Updated Name"
 }
 
 # pub name: Option<String>,

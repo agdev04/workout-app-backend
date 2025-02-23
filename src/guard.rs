@@ -92,7 +92,7 @@ async fn get_middleware(
                                       path.starts_with("/favorite-meals") ||
                                       path.starts_with("/favorite-workouts") ||
                                       path.starts_with("/meal-plans") ||
-                                      path.starts_with("/users/me");
+                                      path.starts_with("/me");
 
                                   let is_public_get = req.method().as_str() == "GET";
 
