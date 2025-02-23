@@ -28,7 +28,6 @@ Authorization: Bearer {{token}}
 
 {
     "name": "Updated Name",
-    "email": "updated@example.com",
     "profile_picture": "image_url",
 }
 
