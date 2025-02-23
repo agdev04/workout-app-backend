@@ -28,5 +28,13 @@ Authorization: Bearer {{token}}
 
 {
     "name": "Updated Name",
-    "email": "updated@example.com"
+    "email": "updated@example.com",
+    "profile_picture": "image_url",
 }
+
+# pub name: Option<String>,
+# pub email: Option<String>,
+# pub password: Option<String>,
+# pub profile_picture: Option<String>,
+# pub role: Option<String>,
+# pub status: Option<String>,
