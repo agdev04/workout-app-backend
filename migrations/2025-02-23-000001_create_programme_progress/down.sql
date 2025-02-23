@@ -1,1 +1,1 @@
-DROP TABLE programme_progress;
+DROP TABLE IF EXISTS programme_progress;

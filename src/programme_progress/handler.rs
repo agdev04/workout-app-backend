@@ -27,9 +27,9 @@ pub async fn create_progress(new_progress: web::Json<NewProgrammeProgress>) -> R
     })))
 }
 
-use crate::schema::{programme_weeks, exercises};
+use crate::schema::{programme_weeks, exercises, programmes};
 use crate::exercises::model::Exercise;
-use crate::programmes::model::ProgrammeWeek;
+use crate::programmes::model::{ProgrammeWeek, Programme};
 
 #[derive(Debug, serde::Serialize)]
 pub struct ProgrammeProgressWithDetails {
@@ -37,6 +37,7 @@ pub struct ProgrammeProgressWithDetails {
     pub progress: ProgrammeProgress,
     pub exercise: Exercise,
     pub week: ProgrammeWeek,
+    pub programme: Programme,
 }
 
 pub async fn get_user_programme_progress(path: web::Path<(i32, i32)>) -> Result<HttpResponse> {
@@ -46,18 +47,25 @@ pub async fn get_user_programme_progress(path: web::Path<(i32, i32)>) -> Result<
     let progress_with_details = programme_progress::table
         .inner_join(exercises::table.on(programme_progress::exercise_id.eq(exercises::id)))
         .inner_join(programme_weeks::table.on(programme_progress::programme_week_id.eq(programme_weeks::id)))
+        .inner_join(programmes::table.on(programme_progress::programme_id.eq(programmes::id)))
         .filter(programme_progress::user_id.eq(user_id))
         .filter(programme_progress::programme_id.eq(programme_id))
-        .select((programme_progress::all_columns, exercises::all_columns, programme_weeks::all_columns))
-        .load::<(ProgrammeProgress, Exercise, ProgrammeWeek)>(&mut connection)
+        .select((
+            programme_progress::all_columns,
+            exercises::all_columns,
+            programme_weeks::all_columns,
+            programmes::all_columns
+        ))
+        .load::<(ProgrammeProgress, Exercise, ProgrammeWeek, Programme)>(&mut connection)
         .map_err(|e| actix_web::error::ErrorInternalServerError(e))?;
 
     let result: Vec<ProgrammeProgressWithDetails> = progress_with_details
         .into_iter()
-        .map(|(progress, exercise, week)| ProgrammeProgressWithDetails {
+        .map(|(progress, exercise, week, programme)| ProgrammeProgressWithDetails {
             progress,
             exercise,
             week,
+            programme,
         })
         .collect();
 

@@ -2,7 +2,7 @@
 
 @baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
 
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjIwNTU4ODU1NjN9.nqM13kkdfdIoecANfmkJ5zvmXHrVNM1qQvY2g7kbJcw
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjIwNTU4ODk4NDd9.pAkwL7QVu2xI0Beey813WmPkX__vQKKqtA6_xt4U244
 
 ### Create new programme progress
 POST {{baseUrl}}/programme-progress
@@ -20,8 +20,7 @@ Authorization: Bearer {{authToken}}
     "actual_reps":10,
     "actual_duration_seconds":null,
     "actual_rest_seconds":30,
-    "notes":"",
-    "completed_at":"2025-02-23T11:38:21.546Z"
+    "notes":""
 }
 
 

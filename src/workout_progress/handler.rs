@@ -2,9 +2,10 @@ use actix_web::{web, HttpResponse, Result};
 use diesel::prelude::*;
 
 use crate::db::establish_connection;
-use crate::schema::{workout_progress, exercises};
+use crate::schema::{exercises, workout_progress, workouts};
 use super::model::{NewWorkoutProgress, UpdateWorkoutProgress, WorkoutProgress};
 use crate::exercises::model::Exercise;
+use crate::workouts::model::Workout;
 
 pub async fn record_progress(new_progress: web::Json<NewWorkoutProgress>) -> Result<HttpResponse> {
     let mut connection = establish_connection();
@@ -43,15 +44,16 @@ pub async fn get_user_workout_progress(user_id: web::Path<i32>) -> Result<HttpRe
 
     let progress = workout_progress::table
         .inner_join(exercises::table)
+        .inner_join(workouts::table.on(workout_progress::workout_id.eq(workouts::id)))
         .filter(workout_progress::user_id.eq(user_id.into_inner()))
         .order_by(workout_progress::completed_at.desc())
-        .select((workout_progress::all_columns, exercises::all_columns))
-        .load::<(WorkoutProgress, Exercise)>(&mut connection)
+        .select((workout_progress::all_columns, exercises::all_columns, workouts::all_columns))
+        .load::<(WorkoutProgress, Exercise, Workout)>(&mut connection)
         .map_err(|e| actix_web::error::ErrorInternalServerError(e))?;
 
     let result: Vec<serde_json::Value> = progress
         .into_iter()
-        .map(|(progress, exercise)| {
+        .map(|(progress, exercise, workout)| {
             serde_json::json!({
                 "id": progress.id,
                 "user_id": progress.user_id,
@@ -73,6 +75,14 @@ pub async fn get_user_workout_progress(user_id: web::Path<i32>) -> Result<HttpRe
                     "is_active": exercise.is_active,
                     "thumbnail_url": exercise.thumbnail_url,
                     "video_url": exercise.video_url
+                },
+                "workout": {
+                    "id": workout.id,
+                    "name": workout.name,
+                    "description": workout.description,
+                    "thumbnail_url": workout.thumbnail_url,
+                    "created_at": workout.created_at,
+                    "updated_at": workout.updated_at
                 }
             })
         })

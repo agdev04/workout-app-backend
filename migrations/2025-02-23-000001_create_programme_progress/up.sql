@@ -13,8 +13,7 @@ CREATE TABLE programme_progress (
     notes TEXT,
     completed_at TIMESTAMP,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT unique_user_programme_exercise UNIQUE (user_id, programme_id, programme_week_id, exercise_id, day_number)
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 SELECT diesel_manage_updated_at('programme_progress');
