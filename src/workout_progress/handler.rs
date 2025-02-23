@@ -2,8 +2,9 @@ use actix_web::{web, HttpResponse, Result};
 use diesel::prelude::*;
 
 use crate::db::establish_connection;
-use crate::schema::workout_progress;
+use crate::schema::{workout_progress, exercises};
 use super::model::{NewWorkoutProgress, UpdateWorkoutProgress, WorkoutProgress};
+use crate::exercises::model::Exercise;
 
 pub async fn record_progress(new_progress: web::Json<NewWorkoutProgress>) -> Result<HttpResponse> {
     let mut connection = establish_connection();
@@ -41,14 +42,45 @@ pub async fn get_user_workout_progress(user_id: web::Path<i32>) -> Result<HttpRe
     let mut connection = establish_connection();
 
     let progress = workout_progress::table
+        .inner_join(exercises::table)
         .filter(workout_progress::user_id.eq(user_id.into_inner()))
         .order_by(workout_progress::completed_at.desc())
-        .load::<WorkoutProgress>(&mut connection)
+        .select((workout_progress::all_columns, exercises::all_columns))
+        .load::<(WorkoutProgress, Exercise)>(&mut connection)
         .map_err(|e| actix_web::error::ErrorInternalServerError(e))?;
+
+    let result: Vec<serde_json::Value> = progress
+        .into_iter()
+        .map(|(progress, exercise)| {
+            serde_json::json!({
+                "id": progress.id,
+                "user_id": progress.user_id,
+                "workout_id": progress.workout_id,
+                "exercise_id": progress.exercise_id,
+                "workout_exercise_id": progress.workout_exercise_id,
+                "completed": progress.completed,
+                "actual_sets_number": progress.actual_sets_number,
+                "actual_reps": progress.actual_reps,
+                "actual_duration_seconds": progress.actual_duration_seconds,
+                "notes": progress.notes,
+                "completed_at": progress.completed_at,
+                "created_at": progress.created_at,
+                "updated_at": progress.updated_at,
+                "exercise": {
+                    "id": exercise.id,
+                    "name": exercise.name,
+                    "description": exercise.description,
+                    "is_active": exercise.is_active,
+                    "thumbnail_url": exercise.thumbnail_url,
+                    "video_url": exercise.video_url
+                }
+            })
+        })
+        .collect();
 
     Ok(HttpResponse::Ok().json(serde_json::json!({
         "status": "success",
-        "data": progress
+        "data": result
     })))
 }
 

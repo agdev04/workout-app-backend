@@ -1,5 +1,7 @@
-@baseUrl = http://localhost:3000
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3NDAwNzAzNDV9.PrZHQak1Hv2E8Ea1A2ylIJuMpuI7ZXFPeCK1B4EPs5U
+# @baseUrl = http://localhost:3000
+@baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
+
+@authToken =  eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjE3NDAzMDQwNDJ9.DD6NDyiA2moA4RCyNxpjYODdb-H3kweF_5QnK9ntofg
 
 ### Record workout progress
 POST {{baseUrl}}/workout-progress
@@ -9,9 +11,12 @@ Authorization: Bearer {{authToken}}
 {
     "user_id": 1,
     "workout_id": 1,
-    "completed_at": "2024-02-23T10:00:00Z",
-    "duration_minutes": 45,
-    "calories_burned": 300,
+    "exercise_id": 1,
+    "workout_exercise_id": 1,
+    "completed": true,
+    "actual_sets_number": 3,
+    "actual_reps": 12,
+    "actual_duration_seconds": 300,
     "notes": "Great workout session"
 }
 
@@ -21,14 +26,15 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    "completed_at": "2024-02-23T11:30:00Z",
-    "duration_minutes": 50,
-    "calories_burned": 350,
+    "completed": true,
+    "actual_sets_number": 4,
+    "actual_reps": 15,
+    "actual_duration_seconds": 360,
     "notes": "Updated workout details"
 }
 
 ### Get user's workout progress
-GET {{baseUrl}}/workout-progress/user/1
+GET {{baseUrl}}/workout-progress/user/4
 Authorization: Bearer {{authToken}}
 
 ### Get workout progress by workout ID

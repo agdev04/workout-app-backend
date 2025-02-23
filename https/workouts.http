@@ -1,5 +1,7 @@
-@baseUrl = http://localhost:3000
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3NDAyNDIzNDl9.10N2wvSNNzIp-MgLT2nzOIfgKaF89mrXPjtfrQuUvbU
+# @baseUrl = http://localhost:3000
+@baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
+
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjE3NDAyOTEwMDl9.AW1M_L6lmVJ3oLXHdoEJEVRQJVst2AGJ6YfN814ZZVw
 
 ### Login to get auth token
 # @name login
