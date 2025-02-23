@@ -1,0 +1,32 @@
+@baseUrl = http://localhost:8080
+@token = {{login.response.body.token}}
+
+### Login to get token
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+    "email": "user@example.com",
+    "password": "password123"
+}
+
+### Reset Password
+POST {{baseUrl}}/users/me/reset-password
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "current_password": "password123",
+    "new_password": "newpassword123"
+}
+
+### Update User Information
+PUT {{baseUrl}}/users/me/update
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "Updated Name",
+    "email": "updated@example.com"
+}

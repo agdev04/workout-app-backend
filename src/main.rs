@@ -26,6 +26,7 @@ pub mod favorite_meals;
 pub mod favorite_workouts;
 pub mod programme_progress;
 pub mod workout_progress;
+pub mod me;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
