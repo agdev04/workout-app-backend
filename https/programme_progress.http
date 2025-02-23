@@ -1,6 +1,6 @@
-# @baseUrl = http://localhost:3000
+@baseUrl = http://localhost:3000
 
-@baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
+# @baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
 
 @authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjIwNTU4ODk4NDd9.pAkwL7QVu2xI0Beey813WmPkX__vQKKqtA6_xt4U244
 
@@ -53,8 +53,12 @@ Authorization: Bearer {{authToken}}
     "completed_at": "2024-02-23T11:30:00Z"
 }
 
-### Get user's programme progress
+### Get user's programme by programme id progress
 GET {{baseUrl}}/programme-progress/user/4/1
+Authorization: Bearer {{authToken}}
+
+### Get user's programme progress
+GET {{baseUrl}}/programme-progress/user/4
 Authorization: Bearer {{authToken}}
 
 ### Get programme progress by programme ID
