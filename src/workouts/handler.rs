@@ -1,9 +1,12 @@
-use actix_web::{web, HttpResponse, Result};
-use serde_json::json;
-use crate::{db::establish_connection, schema::{workouts, workout_exercises, exercises}};
-use diesel::prelude::*;
-use crate::workouts::model::*;
 use crate::exercises::model::Exercise;
+use crate::workouts::model::*;
+use crate::{
+    db::establish_connection,
+    schema::{exercises, workout_exercises, workouts},
+};
+use actix_web::{web, HttpResponse, Result};
+use diesel::prelude::*;
+use serde_json::json;
 
 #[derive(serde::Serialize)]
 pub struct GenericResponse {
@@ -42,7 +45,7 @@ pub async fn create_workout(new_workout: web::Json<NewWorkout>) -> Result<HttpRe
 
 pub async fn get_workout_list() -> Result<HttpResponse> {
     let connection = &mut establish_connection();
-    
+
     let workouts_list = workouts::table
         .load::<Workout>(connection)
         .map_err(|e| actix_web::error::ErrorInternalServerError(e))?;
@@ -109,7 +112,10 @@ pub async fn get_workout(id: web::Path<i32>) -> Result<HttpResponse> {
     })))
 }
 
-pub async fn update_workout(id: web::Path<i32>, update_workout: web::Json<UpdateWorkout>) -> Result<HttpResponse> {
+pub async fn update_workout(
+    id: web::Path<i32>,
+    update_workout: web::Json<UpdateWorkout>,
+) -> Result<HttpResponse> {
     let mut connection = establish_connection();
     let workout_id = id.into_inner();
 
@@ -139,7 +145,9 @@ pub async fn delete_workout(id: web::Path<i32>) -> Result<HttpResponse> {
 }
 
 // Workout Exercise handlers
-pub async fn add_workout_exercise(new_exercise: web::Json<NewWorkoutExercise>) -> Result<HttpResponse> {
+pub async fn add_workout_exercise(
+    new_exercise: web::Json<NewWorkoutExercise>,
+) -> Result<HttpResponse> {
     let mut connection = establish_connection();
 
     let result = diesel::insert_into(workout_exercises::table)
@@ -157,10 +165,7 @@ pub async fn delete_workout_exercise(params: web::Path<i32>) -> Result<HttpRespo
     let mut connection = establish_connection();
     let id = params.into_inner();
 
-    diesel::delete(
-        workout_exercises::table
-        .find(id)
-    )
+    diesel::delete(workout_exercises::table.find(id))
         .execute(&mut connection)
         .map_err(|e| actix_web::error::ErrorInternalServerError(e))?;
 

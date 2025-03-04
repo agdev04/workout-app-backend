@@ -19,8 +19,8 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "current_password": "password123",
-    "new_password": "newpassword123"
+    "current_password": "newpass123",
+    "new_password": "pass123"
 }
 
 ### Update User Information

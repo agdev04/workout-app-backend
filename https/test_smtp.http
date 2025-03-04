@@ -1,0 +1,10 @@
+@baseUrl = http://localhost:3000
+
+### Test SMTP Email
+# @name testSmtp
+POST {{baseUrl}}/auth/smtp-test
+Content-Type: application/json
+
+{
+    "to": "dev@agnieve.com"
+}

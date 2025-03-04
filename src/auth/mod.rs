@@ -14,6 +14,8 @@ use jsonwebtoken::{encode, Header, EncodingKey};
 
 pub mod http_only;
 pub mod default;
+pub mod smtp;
+pub mod password_reset;
 
 pub fn hash_password(password: String) -> Result<String, actix_web::Error> {
   let salt = SaltString::generate(&mut OsRng);
