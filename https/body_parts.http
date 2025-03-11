@@ -1,5 +1,6 @@
-@baseUrl = http://localhost:3000
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjE3NDAyMDE0NDR9.hXOxTd62FccziKLk1FtYvmSMH2raCZ_EejyuSZrV7pQ
+@baseUrl = https://backend-workout.agnieve.com
+# @baseUrl = http://localhost:3000
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjIwNTY5MTU3OTZ9.06-PrP3lqm1v7zNNL_MVb6-Ylib1EYXViHdVOnuNTmk
 
 ### Get all body parts
 GET {{baseUrl}}/body-parts

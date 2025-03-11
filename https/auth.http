@@ -1,7 +1,7 @@
-@baseUrl = http://localhost:3000
-# @baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
+# @baseUrl = http://localhost:3000
+@baseUrl = https://backend-workout.agnieve.com
 @email = dev@agnieve.com
-@password =newpass123
+@password =pass123
 @authToken = {{login.response.body.token}}
 
 ### Register a new user
@@ -36,3 +36,4 @@ Authorization: Bearer {{authToken}}
 
 ### Protected Route Example (with HTTP-Only Cookie - for HTTP-Only Auth)
 GET {{baseUrl}}/protected-route
+Authorization: Bearer {{authToken}}

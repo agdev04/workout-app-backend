@@ -1,5 +1,5 @@
-@baseUrl = http://localhost:3000
-# @baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
+# @baseUrl = http://localhost:3000
+@baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
 
 @token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjIwNTU5MDE5MTV9.zYlmSXnmAEclLOz47-xeA7XGZOBCM9DlZjS44-TW0LY
 
@@ -9,8 +9,8 @@ POST {{baseUrl}}/auth/login
 Content-Type: application/json
 
 {
-    "email": "user@example.com",
-    "password": "password123"
+    "email": "john@example.com",
+    "password": "pass123"
 }
 
 ### Reset Password
@@ -29,7 +29,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "name": "Updated Name"
+    "name": "John Doe",
 }
 
 # pub name: Option<String>,

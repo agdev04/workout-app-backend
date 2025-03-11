@@ -5,7 +5,7 @@ use serde::Deserialize;
 use crate::db::establish_connection;
 use crate::schema::users;
 use crate::users::handler::hash_password;
-use crate::users::model::{UpdateUser, User};
+use crate::users::model::UpdateUser;
 
 #[derive(serde::Serialize)]
 pub struct GenericResponse {
