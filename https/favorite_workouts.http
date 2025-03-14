@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:3000
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjE3NDAyNDIzNDl9.10N2wvSNNzIp-MgLT2nzOIfgKaF89mrXPjtfrQuUvbU
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjIwNTczMzU0NDl9.7e68boprt5tRrNMkfpU8ZsUvCi77StoDKxWiWN90d7U
 
 ### Add workout to favorites
 POST {{baseUrl}}/favorite-workouts

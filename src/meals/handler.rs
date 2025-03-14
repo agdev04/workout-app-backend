@@ -1,8 +1,11 @@
-use actix_web::{web, HttpResponse, Result};
-use serde_json::json;
-use crate::{db::establish_connection, schema::{meals, meal_ingredients, meal_instructions}};
-use diesel::prelude::*;
 use crate::meals::model::*;
+use crate::{
+    db::establish_connection,
+    schema::{meal_ingredients, meal_instructions, meals},
+};
+use actix_web::{web, HttpResponse, Result};
+use diesel::prelude::*;
+use serde_json::json;
 
 #[derive(serde::Serialize)]
 pub struct GenericResponse {
@@ -35,7 +38,7 @@ pub async fn create_meal(new_meal: web::Json<NewMeal>) -> Result<HttpResponse> {
 
 pub async fn get_meal_list() -> Result<HttpResponse> {
     let connection = &mut establish_connection();
-    
+
     let meals_list = meals::table
         .load::<Meal>(connection)
         .map_err(|e| actix_web::error::ErrorInternalServerError(e))?;
@@ -100,7 +103,10 @@ pub async fn get_meal(id: web::Path<i32>) -> Result<HttpResponse> {
     })))
 }
 
-pub async fn update_meal(id: web::Path<i32>, meal_data: web::Json<UpdateMeal>) -> Result<HttpResponse> {
+pub async fn update_meal(
+    id: web::Path<i32>,
+    meal_data: web::Json<UpdateMeal>,
+) -> Result<HttpResponse> {
     let mut connection = establish_connection();
     let meal_id = id.into_inner();
 
@@ -130,7 +136,9 @@ pub async fn delete_meal(id: web::Path<i32>) -> Result<HttpResponse> {
 }
 
 // Meal Ingredients handlers
-pub async fn add_meal_ingredient(new_ingredient: web::Json<NewMealIngredient>) -> Result<HttpResponse> {
+pub async fn add_meal_ingredient(
+    new_ingredient: web::Json<NewMealIngredient>,
+) -> Result<HttpResponse> {
     let mut connection = establish_connection();
 
     let result = diesel::insert_into(meal_ingredients::table)
@@ -151,7 +159,7 @@ pub async fn delete_meal_ingredient(params: web::Path<(i32, i32)>) -> Result<Htt
     diesel::delete(
         meal_ingredients::table
             .filter(meal_ingredients::meal_id.eq(meal_id))
-            .filter(meal_ingredients::id.eq(ingredient_id))
+            .filter(meal_ingredients::id.eq(ingredient_id)),
     )
     .execute(&mut connection)
     .map_err(|e| actix_web::error::ErrorInternalServerError(e))?;
@@ -163,7 +171,9 @@ pub async fn delete_meal_ingredient(params: web::Path<(i32, i32)>) -> Result<Htt
 }
 
 // Meal Instructions handlers
-pub async fn add_meal_instruction(new_instruction: web::Json<NewMealInstruction>) -> Result<HttpResponse> {
+pub async fn add_meal_instruction(
+    new_instruction: web::Json<NewMealInstruction>,
+) -> Result<HttpResponse> {
     let mut connection = establish_connection();
 
     let result = diesel::insert_into(meal_instructions::table)
@@ -184,7 +194,7 @@ pub async fn delete_meal_instruction(params: web::Path<(i32, i32)>) -> Result<Ht
     diesel::delete(
         meal_instructions::table
             .filter(meal_instructions::meal_id.eq(meal_id))
-            .filter(meal_instructions::id.eq(instruction_id))
+            .filter(meal_instructions::id.eq(instruction_id)),
     )
     .execute(&mut connection)
     .map_err(|e| actix_web::error::ErrorInternalServerError(e))?;

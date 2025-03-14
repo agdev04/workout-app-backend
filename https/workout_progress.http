@@ -1,7 +1,8 @@
 # @baseUrl = http://localhost:3000
 @baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
 
-@authToken =  eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjE3NDAzMDQwNDJ9.DD6NDyiA2moA4RCyNxpjYODdb-H3kweF_5QnK9ntofg
+@authToken =  eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjIwNTU5MDE5MTV9.zYlmSXnmAEclLOz47-xeA7XGZOBCM9DlZjS44-TW0LY
+
 
 ### Record workout progress
 POST {{baseUrl}}/workout-progress
@@ -34,7 +35,7 @@ Authorization: Bearer {{authToken}}
 }
 
 ### Get user's workout progress
-GET {{baseUrl}}/workout-progress/user/4
+GET {{baseUrl}}/workout-progress/user/1
 Authorization: Bearer {{authToken}}
 
 ### Get workout progress by workout ID

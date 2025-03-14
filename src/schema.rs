@@ -61,6 +61,7 @@ diesel::table! {
         video_url -> Nullable<Text>,
         created_at -> Timestamp,
         updated_at -> Timestamp,
+        met -> Int4,
     }
 }
 
@@ -135,8 +136,13 @@ diesel::table! {
         category -> Varchar,
         description -> Nullable<Text>,
         image_url -> Nullable<Text>,
-        created_at -> Timestamp,
-        updated_at -> Timestamp,
+        prep_time -> Varchar,
+        servings -> Int4,
+        calories -> Varchar,
+        protein -> Varchar,
+        fat -> Varchar,
+        carbs -> Varchar,
+        difficulty -> Varchar,
     }
 }
 
@@ -171,6 +177,7 @@ diesel::table! {
         completed_at -> Nullable<Timestamp>,
         created_at -> Timestamp,
         updated_at -> Timestamp,
+        burned_calories -> Nullable<Varchar>,
     }
 }
 
@@ -237,6 +244,7 @@ diesel::table! {
         completed_at -> Timestamp,
         created_at -> Timestamp,
         updated_at -> Timestamp,
+        burned_calories -> Nullable<Varchar>,
     }
 }
 

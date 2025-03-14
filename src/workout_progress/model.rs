@@ -18,6 +18,7 @@ pub struct WorkoutProgress {
     pub completed_at: NaiveDateTime,
     pub created_at: NaiveDateTime,
     pub updated_at: NaiveDateTime,
+    pub burned_calories: Option<String>,
 }
 
 #[derive(Debug, Deserialize, Insertable)]
@@ -32,6 +33,7 @@ pub struct NewWorkoutProgress {
     pub actual_reps: Option<i32>,
     pub actual_duration_seconds: Option<i32>,
     pub notes: Option<String>,
+    pub burned_calories: String,
 }
 
 #[derive(Debug, Deserialize, AsChangeset)]
@@ -42,4 +44,5 @@ pub struct UpdateWorkoutProgress {
     pub actual_sets_number: Option<i32>,
     pub actual_duration_seconds: Option<i32>,
     pub notes: Option<String>,
+    pub burned_calories: Option<String>,
 }

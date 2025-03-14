@@ -3,10 +3,10 @@ use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
+use super::model::{MealPlan, MealPlanMeal, NewMealPlan, NewMealPlanMeal};
 use crate::db::establish_connection;
-use crate::schema::{meal_plans, meal_plan_meals, meals};
-use super::model::{MealPlan, NewMealPlan, MealPlanMeal, NewMealPlanMeal};
 use crate::meals::model::Meal;
+use crate::schema::{meal_plan_meals, meal_plans, meals};
 
 #[derive(serde::Serialize)]
 pub struct GenericResponse {
@@ -52,7 +52,7 @@ pub struct AddMealRequest {
     pub notes: Option<String>,
 }
 
-pub async fn get_meal_plans(user_id: web::ReqData<String>,) -> Result<HttpResponse> {
+pub async fn get_meal_plans(user_id: web::ReqData<String>) -> Result<HttpResponse> {
     let user_id: i32 = user_id.parse().unwrap_or(0);
     let connection = &mut establish_connection();
 
@@ -77,10 +77,7 @@ pub async fn get_meal_plans(user_id: web::ReqData<String>,) -> Result<HttpRespon
                 })
                 .collect();
 
-            MealPlanWithMeals {
-                meal_plan,
-                meals,
-            }
+            MealPlanWithMeals { meal_plan, meals }
         })
         .collect();
 
@@ -90,7 +87,10 @@ pub async fn get_meal_plans(user_id: web::ReqData<String>,) -> Result<HttpRespon
     })))
 }
 
-pub async fn get_meal_plan(user_id: web::ReqData<String>, path: web::Path<i32>) -> Result<HttpResponse> {
+pub async fn get_meal_plan(
+    user_id: web::ReqData<String>,
+    path: web::Path<i32>,
+) -> Result<HttpResponse> {
     let meal_plan_id = path.into_inner();
     let user_id: i32 = user_id.parse().unwrap_or(0);
     let connection = &mut establish_connection();
@@ -117,20 +117,17 @@ pub async fn get_meal_plan(user_id: web::ReqData<String>, path: web::Path<i32>) 
                 })
                 .collect();
 
-            let meal_plan_with_meals = MealPlanWithMeals {
-                meal_plan,
-                meals,
-            };
+            let meal_plan_with_meals = MealPlanWithMeals { meal_plan, meals };
 
             Ok(HttpResponse::Ok().json(json!({
                 "status": "success",
                 "data": meal_plan_with_meals
             })))
-        },
+        }
         None => Ok(HttpResponse::NotFound().json(GenericResponse {
             status: "error".to_string(),
             message: "Meal plan not found".to_string(),
-        }))
+        })),
     }
 }
 
@@ -138,7 +135,6 @@ pub async fn create_meal_plan(
     user_id: web::ReqData<String>,
     req: web::Json<CreateMealPlanRequest>,
 ) -> Result<HttpResponse> {
-    
     let user_id: i32 = user_id.parse().unwrap_or(0);
     let connection = &mut establish_connection();
 
@@ -195,11 +191,11 @@ pub async fn update_meal_plan(
                     message: "Meal plan not found".to_string(),
                 }))
             }
-        },
+        }
         Err(_) => Ok(HttpResponse::InternalServerError().json(GenericResponse {
             status: "error".to_string(),
             message: "Failed to update meal plan".to_string(),
-        }))
+        })),
     }
 }
 
@@ -214,7 +210,7 @@ pub async fn delete_meal_plan(
     let result = diesel::delete(
         meal_plans::table
             .filter(meal_plans::id.eq(meal_plan_id))
-            .filter(meal_plans::user_id.eq(user_id))
+            .filter(meal_plans::user_id.eq(user_id)),
     )
     .execute(connection);
 
@@ -231,11 +227,11 @@ pub async fn delete_meal_plan(
                     message: "Meal plan not found".to_string(),
                 }))
             }
-        },
+        }
         Err(_) => Ok(HttpResponse::InternalServerError().json(GenericResponse {
             status: "error".to_string(),
             message: "Failed to delete meal plan".to_string(),
-        }))
+        })),
     }
 }
 
@@ -308,7 +304,7 @@ pub async fn delete_meal_from_plan(
     let result = diesel::delete(
         meal_plan_meals::table
             .filter(meal_plan_meals::id.eq(meal_plan_meal_id))
-            .filter(meal_plan_meals::meal_plan_id.eq(meal_plan_id))
+            .filter(meal_plan_meals::meal_plan_id.eq(meal_plan_id)),
     )
     .execute(connection);
 
@@ -325,10 +321,10 @@ pub async fn delete_meal_from_plan(
                     message: "Meal not found in plan".to_string(),
                 }))
             }
-        },
+        }
         Err(_) => Ok(HttpResponse::InternalServerError().json(GenericResponse {
             status: "error".to_string(),
             message: "Failed to remove meal from plan".to_string(),
-        }))
+        })),
     }
 }

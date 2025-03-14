@@ -1,6 +1,6 @@
+use chrono::NaiveDateTime;
 use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
-use chrono::NaiveDateTime;
 
 #[derive(Debug, Serialize, Deserialize, Queryable, Identifiable)]
 #[diesel(table_name = crate::schema::exercises)]
@@ -13,6 +13,7 @@ pub struct Exercise {
     pub video_url: Option<String>,
     pub created_at: NaiveDateTime,
     pub updated_at: NaiveDateTime,
+    pub met: i32,
 }
 
 #[derive(Debug, Serialize, Deserialize, Insertable)]
@@ -23,6 +24,7 @@ pub struct NewExercise {
     pub is_active: bool,
     pub thumbnail_url: Option<String>,
     pub video_url: Option<String>,
+    pub met: i32,
 }
 
 #[derive(Debug, Serialize, Deserialize, AsChangeset)]
@@ -33,6 +35,7 @@ pub struct UpdateExercise {
     pub is_active: Option<bool>,
     pub thumbnail_url: Option<String>,
     pub video_url: Option<String>,
+    pub met: Option<i32>,
 }
 
 // Exercise relationship models

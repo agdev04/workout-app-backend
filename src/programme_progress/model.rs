@@ -21,6 +21,7 @@ pub struct ProgrammeProgress {
     pub completed_at: Option<NaiveDateTime>,
     pub created_at: NaiveDateTime,
     pub updated_at: NaiveDateTime,
+    pub burned_calories: Option<String>,
 }
 
 #[derive(Debug, Deserialize, Insertable)]
