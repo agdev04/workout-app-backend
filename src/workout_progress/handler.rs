@@ -72,7 +72,7 @@ pub async fn get_user_workout_progress(user_id: web::Path<i32>) -> Result<HttpRe
                 "completed_at": progress.completed_at,
                 "created_at": progress.created_at,
                 "updated_at": progress.updated_at,
-                "deleted_at": progress.burned_calories,
+                "burned_calories": progress.burned_calories,
                 "exercise": {
                     "id": exercise.id,
                     "name": exercise.name,
