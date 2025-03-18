@@ -1,5 +1,6 @@
-@baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjIiLCJleHAiOjE3Mzk5Nzc5Nzd9.fJI5RsgxD3lLTn9NpMZ8Nq_JsaA_05WZk1NZaImk_-Y
+@baseUrl = https://backend-workout.vpa-support.site
+# @baseUrl = http://localhost:3000
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjIwNTc1MDExNDh9.P-ZF1SKetgf-ERu4RKVCG-5YyJYJo8pRFKJ0YEHgmcs
 
 ### Get all exercises
 GET {{baseUrl}}/exercises
@@ -15,21 +16,20 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    "name": "Bench Press",
+    "name": "test",
     "description": "A compound exercise that targets the chest muscles",
     "instructions": "1. Lie on a flat bench\n2. Grip the barbell with hands slightly wider than shoulder-width\n3. Lower the bar to your chest\n4. Push the bar back up to starting position",
-    "is_active": true
+    "is_active": true,
+    "met" : 2
 }
 
 ### Update exercise
-PATCH {{baseUrl}}/exercises/1
+PATCH {{baseUrl}}/exercises/9
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    "name": "Barbell Bench Press",
-    "description": "Updated description for bench press exercise",
-    "instructions": "Updated instructions for performing bench press"
+    "met": 3
 }
 
 ### Delete exercise

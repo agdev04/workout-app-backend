@@ -1,8 +1,14 @@
-use actix_web::{web, HttpResponse, Result};
-use serde_json::json;
-use crate::{db::establish_connection, schema::{exercises, categories, equipment, body_parts, exercise_body_parts, exercise_categories, exercise_equipment}};
-use diesel::prelude::*;
 use crate::exercises::model::*;
+use crate::{
+    db::establish_connection,
+    schema::{
+        body_parts, categories, equipment, exercise_body_parts, exercise_categories,
+        exercise_equipment, exercises,
+    },
+};
+use actix_web::{web, HttpResponse, Result};
+use diesel::prelude::*;
+use serde_json::json;
 
 #[derive(serde::Serialize)]
 pub struct GenericResponse {
@@ -14,8 +20,12 @@ pub struct GenericResponse {
 pub async fn create_exercise(new_exercise: web::Json<NewExercise>) -> Result<HttpResponse> {
     let mut connection = establish_connection();
 
+    let news = &new_exercise.into_inner();
+
+    println!("{:?}", &news);
+
     let result = diesel::insert_into(exercises::table)
-        .values(&new_exercise.into_inner())
+        .values(news)
         .get_result::<Exercise>(&mut connection)
         .map_err(|e| actix_web::error::ErrorInternalServerError(e))?;
 
@@ -42,7 +52,7 @@ pub struct ExerciseWithRelations {
 
 pub async fn get_exercise_list() -> Result<HttpResponse> {
     let connection = &mut establish_connection();
-    
+
     // Get all exercises
     let exercises = exercises::table
         .load::<Exercise>(connection)
@@ -130,7 +140,10 @@ pub async fn get_exercise(id: web::Path<i32>) -> Result<HttpResponse> {
     })))
 }
 
-pub async fn update_exercise(id: web::Path<i32>, exercise: web::Json<UpdateExercise>) -> Result<HttpResponse> {
+pub async fn update_exercise(
+    id: web::Path<i32>,
+    exercise: web::Json<UpdateExercise>,
+) -> Result<HttpResponse> {
     let mut connection = establish_connection();
     let exercise_id = id.into_inner();
     let result = diesel::update(exercises::table.find(exercise_id))
@@ -150,19 +163,18 @@ pub async fn update_exercise(id: web::Path<i32>, exercise: web::Json<UpdateExerc
                     message: "Exercise not found".to_string(),
                 }))
             }
-        },
+        }
         Err(_) => Ok(HttpResponse::InternalServerError().json(GenericResponse {
             status: "error".to_string(),
             message: "Failed to update exercise".to_string(),
-        }))
+        })),
     }
 }
 
 pub async fn delete_exercise(id: web::Path<i32>) -> Result<HttpResponse> {
     let mut connection = establish_connection();
     let exercise_id = id.into_inner();
-    let result = diesel::delete(exercises::table.find(exercise_id))
-        .execute(&mut connection);
+    let result = diesel::delete(exercises::table.find(exercise_id)).execute(&mut connection);
 
     match result {
         Ok(num_deleted) => {
@@ -177,16 +189,18 @@ pub async fn delete_exercise(id: web::Path<i32>) -> Result<HttpResponse> {
                     message: "Exercise not found".to_string(),
                 }))
             }
-        },
+        }
         Err(_) => Ok(HttpResponse::InternalServerError().json(GenericResponse {
             status: "error".to_string(),
             message: "Failed to delete exercise".to_string(),
-        }))
+        })),
     }
 }
 
 // Exercise Body Parts handlers
-pub async fn add_exercise_body_part(new_relation: web::Json<NewExerciseBodyPart>) -> Result<HttpResponse> {
+pub async fn add_exercise_body_part(
+    new_relation: web::Json<NewExerciseBodyPart>,
+) -> Result<HttpResponse> {
     let mut connection = establish_connection();
 
     diesel::insert_into(exercise_body_parts::table)
@@ -207,8 +221,9 @@ pub async fn remove_exercise_body_part(params: web::Path<(i32, i32)>) -> Result<
     let result = diesel::delete(
         exercise_body_parts::table
             .filter(exercise_body_parts::exercise_id.eq(exercise_id))
-            .filter(exercise_body_parts::body_part_id.eq(body_part_id))
-    ).execute(&mut connection);
+            .filter(exercise_body_parts::body_part_id.eq(body_part_id)),
+    )
+    .execute(&mut connection);
 
     match result {
         Ok(num_deleted) => {
@@ -223,16 +238,18 @@ pub async fn remove_exercise_body_part(params: web::Path<(i32, i32)>) -> Result<
                     message: "Relationship not found".to_string(),
                 }))
             }
-        },
+        }
         Err(_) => Ok(HttpResponse::InternalServerError().json(GenericResponse {
             status: "error".to_string(),
             message: "Failed to remove body part from exercise".to_string(),
-        }))
+        })),
     }
 }
 
 // Exercise Categories handlers
-pub async fn add_exercise_category(new_relation: web::Json<NewExerciseCategory>) -> Result<HttpResponse> {
+pub async fn add_exercise_category(
+    new_relation: web::Json<NewExerciseCategory>,
+) -> Result<HttpResponse> {
     let mut connection = establish_connection();
 
     diesel::insert_into(exercise_categories::table)
@@ -253,8 +270,9 @@ pub async fn remove_exercise_category(params: web::Path<(i32, i32)>) -> Result<H
     let result = diesel::delete(
         exercise_categories::table
             .filter(exercise_categories::exercise_id.eq(exercise_id))
-            .filter(exercise_categories::category_id.eq(category_id))
-    ).execute(&mut connection);
+            .filter(exercise_categories::category_id.eq(category_id)),
+    )
+    .execute(&mut connection);
 
     match result {
         Ok(num_deleted) => {
@@ -269,16 +287,18 @@ pub async fn remove_exercise_category(params: web::Path<(i32, i32)>) -> Result<H
                     message: "Relationship not found".to_string(),
                 }))
             }
-        },
+        }
         Err(_) => Ok(HttpResponse::InternalServerError().json(GenericResponse {
             status: "error".to_string(),
             message: "Failed to remove category from exercise".to_string(),
-        }))
+        })),
     }
 }
 
 // Exercise Equipment handlers
-pub async fn add_exercise_equipment(new_relation: web::Json<NewExerciseEquipment>) -> Result<HttpResponse> {
+pub async fn add_exercise_equipment(
+    new_relation: web::Json<NewExerciseEquipment>,
+) -> Result<HttpResponse> {
     let mut connection = establish_connection();
 
     diesel::insert_into(exercise_equipment::table)
@@ -299,8 +319,9 @@ pub async fn remove_exercise_equipment(params: web::Path<(i32, i32)>) -> Result<
     let result = diesel::delete(
         exercise_equipment::table
             .filter(exercise_equipment::exercise_id.eq(exercise_id))
-            .filter(exercise_equipment::equipment_id.eq(equipment_id))
-    ).execute(&mut connection);
+            .filter(exercise_equipment::equipment_id.eq(equipment_id)),
+    )
+    .execute(&mut connection);
 
     match result {
         Ok(num_deleted) => {
@@ -315,10 +336,10 @@ pub async fn remove_exercise_equipment(params: web::Path<(i32, i32)>) -> Result<
                     message: "Relationship not found".to_string(),
                 }))
             }
-        },
+        }
         Err(_) => Ok(HttpResponse::InternalServerError().json(GenericResponse {
             status: "error".to_string(),
             message: "Failed to remove equipment from exercise".to_string(),
-        }))
+        })),
     }
 }

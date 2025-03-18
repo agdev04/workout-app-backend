@@ -1,10 +1,10 @@
 use actix_web::{web, HttpResponse, Result};
 use diesel::prelude::*;
 
-use crate::db::establish_connection;
-use crate::schema::{exercises, workout_progress, workouts};
 use super::model::{NewWorkoutProgress, UpdateWorkoutProgress, WorkoutProgress};
+use crate::db::establish_connection;
 use crate::exercises::model::Exercise;
+use crate::schema::{exercises, workout_progress, workouts};
 use crate::workouts::model::Workout;
 
 pub async fn record_progress(new_progress: web::Json<NewWorkoutProgress>) -> Result<HttpResponse> {
@@ -23,7 +23,7 @@ pub async fn record_progress(new_progress: web::Json<NewWorkoutProgress>) -> Res
 
 pub async fn update_progress(
     id: web::Path<i32>,
-    update_data: web::Json<UpdateWorkoutProgress>
+    update_data: web::Json<UpdateWorkoutProgress>,
 ) -> Result<HttpResponse> {
     let mut connection = establish_connection();
     let progress_id = id.into_inner();
@@ -47,7 +47,11 @@ pub async fn get_user_workout_progress(user_id: web::Path<i32>) -> Result<HttpRe
         .inner_join(workouts::table.on(workout_progress::workout_id.eq(workouts::id)))
         .filter(workout_progress::user_id.eq(user_id.into_inner()))
         .order_by(workout_progress::completed_at.desc())
-        .select((workout_progress::all_columns, exercises::all_columns, workouts::all_columns))
+        .select((
+            workout_progress::all_columns,
+            exercises::all_columns,
+            workouts::all_columns,
+        ))
         .load::<(WorkoutProgress, Exercise, Workout)>(&mut connection)
         .map_err(|e| actix_web::error::ErrorInternalServerError(e))?;
 
@@ -68,6 +72,7 @@ pub async fn get_user_workout_progress(user_id: web::Path<i32>) -> Result<HttpRe
                 "completed_at": progress.completed_at,
                 "created_at": progress.created_at,
                 "updated_at": progress.updated_at,
+                "deleted_at": progress.burned_calories,
                 "exercise": {
                     "id": exercise.id,
                     "name": exercise.name,
@@ -94,9 +99,7 @@ pub async fn get_user_workout_progress(user_id: web::Path<i32>) -> Result<HttpRe
     })))
 }
 
-pub async fn get_workout_progress(
-    workout_id: web::Path<i32>
-) -> Result<HttpResponse> {
+pub async fn get_workout_progress(workout_id: web::Path<i32>) -> Result<HttpResponse> {
     let mut connection = establish_connection();
 
     let progress = workout_progress::table
