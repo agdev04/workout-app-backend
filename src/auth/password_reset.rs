@@ -4,6 +4,7 @@ use diesel::prelude::*;
 use jsonwebtoken::{encode, EncodingKey, Header};
 use lettre::message::header::ContentType;
 use lettre::transport::smtp::authentication::Credentials;
+use lettre::transport::smtp::client::{Tls, TlsParameters};
 use lettre::{Message, SmtpTransport, Transport};
 use serde::{Deserialize, Serialize};
 use std::env;
@@ -32,17 +33,19 @@ struct PasswordResetClaims {
 
 pub async fn forgot_password(req: web::Json<ForgotPasswordRequest>) -> Result<HttpResponse> {
     let mut connection = establish_connection();
-    
+
     // Check if user exists
     let user = match users::table
         .filter(users::email.eq(&req.email))
         .first::<User>(&mut connection)
     {
         Ok(user) => user,
-        Err(_) => return Ok(HttpResponse::Ok().json(serde_json::json!({
-            "status": "success",
-            "message": "If the email exists, a password reset link will be sent"
-        }))),
+        Err(_) => {
+            return Ok(HttpResponse::Ok().json(serde_json::json!({
+                "status": "success",
+                "message": "If the email exists, a password reset link will be sent"
+            })))
+        }
     };
 
     // Generate reset token
@@ -74,7 +77,8 @@ pub async fn forgot_password(req: web::Json<ForgotPasswordRequest>) -> Result<Ht
     let smtp_username = env::var("SMTP_USERNAME").expect("SMTP_USERNAME not set");
     let smtp_password = env::var("SMTP_PASSWORD").expect("SMTP_PASSWORD not set");
     let smtp_sender = env::var("SMTP_SENDER").expect("SMTP_SENDER not set");
-    let frontend_url = env::var("FRONTEND_URL").unwrap_or_else(|_| "http://localhost:3000".to_string());
+    let frontend_url =
+        env::var("FRONTEND_URL").unwrap_or_else(|_| "http://localhost:3000".to_string());
 
     let reset_link = format!("{}/reset-password?token={}", frontend_url, token);
     let email_body = format!(
@@ -90,9 +94,18 @@ pub async fn forgot_password(req: web::Json<ForgotPasswordRequest>) -> Result<Ht
         .body(email_body)
         .unwrap();
 
+    let smtp_host_clone = smtp_host.clone();
+
+    let tls = TlsParameters::builder(smtp_host_clone)
+        .dangerous_accept_invalid_certs(true)
+        .dangerous_accept_invalid_hostnames(true)
+        .build()
+        .unwrap();
+
     let creds = Credentials::new(smtp_username, smtp_password);
     let mailer = SmtpTransport::relay(&smtp_host)
         .unwrap()
+        .tls(Tls::Required(tls))
         .port(smtp_port)
         .credentials(creds)
         .build();
@@ -105,12 +118,12 @@ pub async fn forgot_password(req: web::Json<ForgotPasswordRequest>) -> Result<Ht
         Err(e) => Ok(HttpResponse::InternalServerError().json(serde_json::json!({
             "status": "error",
             "message": format!("Failed to send reset email: {}", e)
-        })))
+        }))),
     }
 }
 
 pub async fn reset_password_with_token(
-    req: web::Json<ResetPasswordWithTokenRequest>
+    req: web::Json<ResetPasswordWithTokenRequest>,
 ) -> Result<HttpResponse> {
     let key = env::var("AUTH_TOKEN").unwrap_or_else(|_| "secret_token".to_string());
     let token_data = match jsonwebtoken::decode::<PasswordResetClaims>(
@@ -119,10 +132,12 @@ pub async fn reset_password_with_token(
         &jsonwebtoken::Validation::default(),
     ) {
         Ok(token) => token,
-        Err(_) => return Ok(HttpResponse::BadRequest().json(serde_json::json!({
-            "status": "error",
-            "message": "Invalid or expired reset token"
-        }))),
+        Err(_) => {
+            return Ok(HttpResponse::BadRequest().json(serde_json::json!({
+                "status": "error",
+                "message": "Invalid or expired reset token"
+            })))
+        }
     };
 
     let mut connection = establish_connection();
@@ -142,6 +157,6 @@ pub async fn reset_password_with_token(
         Err(_) => Ok(HttpResponse::InternalServerError().json(serde_json::json!({
             "status": "error",
             "message": "Failed to update password"
-        })))
+        }))),
     }
 }
