@@ -1,6 +1,6 @@
-@baseUrl = https://backend-workout.agnieve.com
+@baseUrl = https://q8swckkcso4k80osog8sg840.coolify.agnieve.com
 # @baseUrl = http://localhost:3000
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjIwNTY5MTU3OTZ9.06-PrP3lqm1v7zNNL_MVb6-Ylib1EYXViHdVOnuNTmk
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjIwNjAzNDAxOTR9.2KsuOn2AKp1uMsrnrYJN-nJMXJqXLfgKOvGSCUCW7D8
 
 ### Get all body parts
 GET {{baseUrl}}/body-parts

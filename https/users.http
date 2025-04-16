@@ -1,7 +1,7 @@
-@baseUrl = http://localhost:3000
+@baseUrl = https://q8swckkcso4k80osog8sg840.coolify.agnieve.com
 # @baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
 
-@authToken =  eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjIwNTczMjg0ODZ9.BZJp6mZhE70plBSfD5GKwfJYxYNdQE62f412GlRhg18
+@authToken =  eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjMiLCJleHAiOjIwNjAzNDAzNDh9.A-5vwB7LphQ1CzVmwQZYlUIKPot_f1zMUz4kt8ZapsI
 
 ### Me (Default Auth)
 GET {{baseUrl}}/users/auth/me
@@ -21,15 +21,15 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-    "name": "John",
-    "email": "john@example.com",
+    "name": "Admin",
+    "email": "admin@vpaaustralia.com",
     "password": "pass123",
-    "role": "user",
+    "role": "admin",
     "status": "active"
 }
 
 ### Update user
-PUT {{baseUrl}}/users/2
+PUT {{baseUrl}}/users/1
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 

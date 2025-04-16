@@ -1,0 +1,24 @@
+@baseUrl = http://localhost:3000
+# @baseUrl = http://localhost:3000
+
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjIwNjAzNDQxNTR9.dHx9xvn3MwGaTEPFCeN9YXGftY6RbsvnwMtY6n1n1Dc
+
+### Get overall leaderboard
+GET {{baseUrl}}/leaderboards
+Authorization: Bearer {{authToken}}
+
+### Get leaderboard by metric (total_workouts, total_time, total_exercises)
+GET {{baseUrl}}/leaderboards/metric/total_workouts
+Authorization: Bearer {{authToken}}
+
+### Get user's ranking
+GET {{baseUrl}}/leaderboards/user/1
+Authorization: Bearer {{authToken}}
+
+### Get leaderboard for specific time period (weekly, monthly, all-time)
+GET {{baseUrl}}/leaderboards/period/weekly
+Authorization: Bearer {{authToken}}
+
+### Get leaderboard for specific workout
+GET {{baseUrl}}/leaderboards/workout/1
+Authorization: Bearer {{authToken}}

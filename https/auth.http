@@ -1,5 +1,5 @@
-# @baseUrl = http://localhost:3000
-@baseUrl = https://backend-workout.vpa-support.site
+@baseUrl = http://localhost:3000
+# @baseUrl = https://q8swckkcso4k80osog8sg840.coolify.agnieve.com
 @email = dev@agnieve.com
 @password =pass123
 @authToken = {{login.response.body.token}}
@@ -9,7 +9,7 @@ POST {{baseUrl}}/register
 Content-Type: application/json
 
 {
-    "name": "AG Nieve",
+    "name": "Admin",
     "email": "{{email}}",
     "password": "{{password}}",
     "role" : "admin",
