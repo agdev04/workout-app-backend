@@ -2,7 +2,7 @@ use chrono::NaiveDateTime;
 use diesel::prelude::*;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Serialize, Deserialize, Queryable, Identifiable)]
+#[derive(Debug, Serialize, Deserialize, Selectable, QueryableByName, Queryable, Identifiable)]
 #[diesel(table_name = crate::schema::workout_progress)]
 pub struct WorkoutProgress {
     pub id: i32,
@@ -33,7 +33,7 @@ pub struct NewWorkoutProgress {
     pub actual_reps: Option<i32>,
     pub actual_duration_seconds: Option<i32>,
     pub notes: Option<String>,
-    pub burned_calories: String,
+    pub burned_calories: Option<String>,
 }
 
 #[derive(Debug, Deserialize, AsChangeset)]

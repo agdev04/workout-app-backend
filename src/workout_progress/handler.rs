@@ -10,8 +10,16 @@ use crate::workouts::model::Workout;
 pub async fn record_progress(new_progress: web::Json<NewWorkoutProgress>) -> Result<HttpResponse> {
     let mut connection = establish_connection();
 
+    // Validate that either actual_reps or actual_duration_seconds is provided
+    let progress_data = new_progress.into_inner();
+    if progress_data.actual_reps.is_none() && progress_data.actual_duration_seconds.is_none() {
+        return Err(actix_web::error::ErrorBadRequest(
+            "Either actual_reps or actual_duration_seconds must be provided",
+        ));
+    }
+
     let result = diesel::insert_into(workout_progress::table)
-        .values(&new_progress.into_inner())
+        .values(&progress_data)
         .get_result::<WorkoutProgress>(&mut connection)
         .map_err(|e| actix_web::error::ErrorInternalServerError(e))?;
 

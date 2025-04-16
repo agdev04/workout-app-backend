@@ -1,7 +1,8 @@
 @baseUrl = http://localhost:3000
-# @baseUrl = http://localhost:3000
 
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjIwNjAzNDQxNTR9.dHx9xvn3MwGaTEPFCeN9YXGftY6RbsvnwMtY6n1n1Dc
+# @baseUrl = https://q8swckkcso4k80osog8sg840.coolify.agnieve.com
+
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjIwNjAzNjM1NjF9.7jUd-vxC7WFLVzvimaPeQMk1OLm_anekzzbmD7mmveA
 
 ### Get overall leaderboard
 GET {{baseUrl}}/leaderboards

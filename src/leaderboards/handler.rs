@@ -4,51 +4,48 @@ use crate::schema::{programme_progress, users, workout_progress};
 use actix_web::{web, HttpResponse, Result};
 use diesel::prelude::*;
 use serde_json::json;
+use std::collections::HashMap;
+use std::str::FromStr;
 
 pub async fn get_leaderboard(query: web::Query<LeaderboardQuery>) -> Result<HttpResponse> {
     let mut connection = establish_connection();
 
-    // Get workout progress calories
-    let workout_calories = workout_progress::table
+    // Get individual workout progress entries with burned_calories as string
+    let workout_calories_entries = workout_progress::table
         .inner_join(users::table)
-        .group_by(users::id)
-        .select((
-            users::id,
-            users::name,
-            diesel::dsl::sql::<diesel::sql_types::BigInt>(
-                "SUM(CASE WHEN burned_calories IS NOT NULL THEN CAST(burned_calories AS DECIMAL(10,2)) ELSE 0 END)",
-            ),
-        ))
-        .load::<(i32, String, i64)>(&mut connection)
+        .select((users::id, users::name, workout_progress::burned_calories))
+        .load::<(i32, String, Option<String>)>(&mut connection)
         .map_err(|e| actix_web::error::ErrorInternalServerError(e))?;
 
-    // Get programme progress calories
-    let programme_calories = programme_progress::table
+    // Get individual programme progress entries with burned_calories as string
+    let programme_calories_entries = programme_progress::table
         .inner_join(users::table)
-        .group_by(users::id)
-        .select((
-            users::id,
-            users::name,
-            diesel::dsl::sql::<diesel::sql_types::BigInt>(
-                "SUM(CASE WHEN burned_calories IS NOT NULL THEN CAST(burned_calories AS DECIMAL(10,2)) ELSE 0 END)",
-            ),
-        ))
-        .load::<(i32, String, i64)>(&mut connection)
+        .select((users::id, users::name, programme_progress::burned_calories))
+        .load::<(i32, String, Option<String>)>(&mut connection)
         .map_err(|e| actix_web::error::ErrorInternalServerError(e))?;
 
-    // Combine and calculate total calories
-    let mut combined_stats: std::collections::HashMap<i32, (String, i64)> =
-        std::collections::HashMap::new();
+    // Combine and calculate total calories from strings
+    let mut combined_stats: HashMap<i32, (String, f64)> = HashMap::new();
 
-    for (user_id, username, calories) in workout_calories {
-        combined_stats.insert(user_id, (username, calories));
-    }
-
-    for (user_id, username, calories) in programme_calories {
+    for (user_id, username, calories_str_opt) in workout_calories_entries {
+        let calories = calories_str_opt
+            .and_then(|s| f64::from_str(&s).ok())
+            .unwrap_or(0.0);
         combined_stats
             .entry(user_id)
-            .and_modify(|(_, total_calories)| *total_calories += calories)
-            .or_insert((username, calories));
+            .or_insert_with(|| (username.clone(), 0.0))
+            .1 += calories;
+    }
+
+    for (user_id, username, calories_str_opt) in programme_calories_entries {
+        let calories = calories_str_opt
+            .and_then(|s| f64::from_str(&s).ok())
+            .unwrap_or(0.0);
+        // Use the username from the map if the user already exists from workout progress
+        let entry = combined_stats
+            .entry(user_id)
+            .or_insert_with(|| (username.clone(), 0.0));
+        entry.1 += calories;
     }
 
     // Convert to LeaderboardEntry and sort by calories
@@ -61,11 +58,15 @@ pub async fn get_leaderboard(query: web::Query<LeaderboardQuery>) -> Result<Http
             total_time: 0,
             total_exercises: 0,
             rank: 0,
-            total_calories: total_calories as f64,
+            total_calories, // Already f64
         })
         .collect();
 
-    leaderboard.sort_by(|a, b| b.total_calories.partial_cmp(&a.total_calories).unwrap());
+    leaderboard.sort_by(|a, b| {
+        b.total_calories
+            .partial_cmp(&a.total_calories)
+            .unwrap_or(std::cmp::Ordering::Equal)
+    });
 
     // Add ranks
     for (i, entry) in leaderboard.iter_mut().enumerate() {
@@ -87,27 +88,6 @@ pub async fn get_user_ranking(user_id: web::Path<i32>) -> Result<HttpResponse> {
     let mut connection = establish_connection();
     let user_id = user_id.into_inner();
 
-    // Get user's workout progress calories
-    let _workout_calories = workout_progress::table
-        .filter(workout_progress::user_id.eq(user_id))
-        .select(diesel::dsl::sql::<diesel::sql_types::BigInt>(
-            "SUM(CASE WHEN burned_calories IS NOT NULL THEN CAST(burned_calories AS DECIMAL(10,2)) ELSE 0 END)",
-        ))
-        .first::<i64>(&mut connection)
-        .unwrap_or(0);
-
-    // Get user's programme progress calories
-    let _programme_calories = programme_progress::table
-        .filter(programme_progress::user_id.eq(user_id))
-        .select(diesel::dsl::sql::<diesel::sql_types::BigInt>(
-            "SUM(CASE WHEN burned_calories IS NOT NULL THEN CAST(burned_calories AS DECIMAL(10,2)) ELSE 0 END)",
-        ))
-        .first::<i64>(&mut connection)
-        .unwrap_or(0);
-
-    // Get total calories for all users
-    let mut _all_user_calories: Vec<(i32, String, i64)> = Vec::new();
-
     // Get workout progress calories for all users
     let workout_all_calories = workout_progress::table
         .inner_join(users::table)
@@ -116,7 +96,7 @@ pub async fn get_user_ranking(user_id: web::Path<i32>) -> Result<HttpResponse> {
             users::id,
             users::name,
             diesel::dsl::sql::<diesel::sql_types::BigInt>(
-                "SUM(CASE WHEN burned_calories IS NOT NULL THEN CAST(burned_calories AS DECIMAL(10,2)) ELSE 0 END)",
+                "SUM(CASE WHEN burned_calories IS NOT NULL THEN CAST(burned_calories AS BIGINT) ELSE 0 END)",
             ),
         ))
         .load::<(i32, String, i64)>(&mut connection)
@@ -130,7 +110,7 @@ pub async fn get_user_ranking(user_id: web::Path<i32>) -> Result<HttpResponse> {
             users::id,
             users::name,
             diesel::dsl::sql::<diesel::sql_types::BigInt>(
-                "SUM(CASE WHEN burned_calories IS NOT NULL THEN CAST(burned_calories AS DECIMAL(10,2)) ELSE 0 END)",
+                "SUM(CASE WHEN burned_calories IS NOT NULL THEN CAST(burned_calories AS BIGINT) ELSE 0 END)",
             ),
         ))
         .load::<(i32, String, i64)>(&mut connection)

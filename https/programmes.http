@@ -1,5 +1,6 @@
-@baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
-@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjQiLCJleHAiOjIwNTU4ODI0NzN9.e5JAOXEj9Gkd3R7kZVpmmpfjLpselLvSkXi283DFGho
+@baseUrl = http://localhost:3000
+# @baseUrl = https://w4ocw8og004448w444ogws8w.coolify.agnieve.pro
+@authToken = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzb21lb25lIiwiY29tcGFueSI6IjEiLCJleHAiOjIwNjAzNTg3MDd9.JlEOrqPJ8229z46KmSptgOnx5V067Itb1CL7A1huU-A
 
 ### Create a new programme
 POST {{baseUrl}}/programmes
